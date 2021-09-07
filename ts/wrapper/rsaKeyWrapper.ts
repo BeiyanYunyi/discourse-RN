@@ -1,5 +1,5 @@
 import keypair, { KeypairResults } from "keypair";
-import discourseWrapper from "./discourseWrapper";
+import config from "../config/config";
 import SecureStore from "./secureStoreWrapper";
 
 const genKeyPair = async () => {
@@ -14,13 +14,13 @@ const rsaKeyWrapper = {
 
   async init() {
     const keypInDB = await SecureStore.getItemAsync(
-      `${discourseWrapper.params.application_name}.rsaKeyPair`
+      `${config.applicationName}.rsaKeyPair`
     );
     if (!keypInDB) {
       const keyp = await genKeyPair();
       this.keyp = keyp;
       await SecureStore.setItemAsync(
-        `${discourseWrapper.params.application_name}.rsaKeyPair`,
+        `${config.applicationName}.rsaKeyPair`,
         JSON.stringify(keyp)
       );
     } else {

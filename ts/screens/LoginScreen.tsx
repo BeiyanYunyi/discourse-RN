@@ -1,17 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import axios from "axios";
 import React from "react";
 import Toast from "react-native-root-toast";
 import WebView from "react-native-webview";
+import config from "../config/config";
 import { changeScreen } from "../redux/screenReducer";
 import { useAppDispatch } from "../redux/store";
+import ScreenPropsList from "../types/ScreenPropsList";
 import serializeParams from "../utils/serializeParams";
 import apiKeyWrapper from "../wrapper/apiKeyWrapper";
 import jsEncrypt from "../wrapper/jsEncryptWrapper";
 import rsaKeyWrapper from "../wrapper/rsaKeyWrapper";
-import ScreenPropsList from "../types/ScreenPropsList";
-import discourseWrapper from "../wrapper/discourseWrapper";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   ScreenPropsList,
@@ -30,13 +28,18 @@ const LoginScreen = () => {
       }, 50);
       true;
     `;
+  const params = {
+    application_name: config.applicationName,
+    client_id: config.clientId,
+    scopes: "read,write,message_bus,push,notifications",
+    public_key: rsaKeyWrapper.keyp.public,
+    nonce: 1,
+  };
 
   return (
     <WebView
       source={{
-        uri: `${discourseWrapper.url}/user-api-key/new?${serializeParams(
-          discourseWrapper.params
-        )}`,
+        uri: `${config.url}/user-api-key/new?${serializeParams(params)}`,
       }}
       injectedJavaScript={run}
       onMessage={async (m) => {

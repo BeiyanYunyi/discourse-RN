@@ -16,6 +16,7 @@ import { zhCN } from "date-fns/locale";
 import discourseWrapper from "../wrapper/discourseWrapper";
 import { useNavigation } from "@react-navigation/core";
 import { HomeScreenNavigationProp } from "../screens/HomeScreen";
+import config from "../config/config";
 
 const Topics = ({ topicList }: { topicList: TopicsListType }) => {
   return (
@@ -50,7 +51,7 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
               size={24}
               source={{
                 uri: discourseWrapper.getAvatarAddr(user.avatar_template),
-                headers: { "User-Agent": discourseWrapper.userAgent },
+                headers: { "User-Agent": config.userAgent },
               }}
             />
             最后回复于

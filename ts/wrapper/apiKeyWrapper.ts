@@ -1,4 +1,4 @@
-import discourseWrapper from "./discourseWrapper";
+import config from "../config/config";
 import SecureStore from "./secureStoreWrapper";
 
 const apiKeyWrapper = {
@@ -6,15 +6,12 @@ const apiKeyWrapper = {
 
   async changeKey(key: string) {
     this.key = key;
-    await SecureStore.setItemAsync(
-      `${discourseWrapper.params.application_name}.apiKey`,
-      key
-    );
+    await SecureStore.setItemAsync(`${config.applicationName}.apiKey`, key);
   },
 
   async init() {
     const keyInDB = await SecureStore.getItemAsync(
-      `${discourseWrapper.params.application_name}.apiKey`
+      `${config.applicationName}.apiKey`
     );
     if (!keyInDB) {
       return false;
