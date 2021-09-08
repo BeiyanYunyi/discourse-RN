@@ -39,14 +39,14 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
       onPress={() => {
         navigation.navigate("Topic", {
           topicID: topic.id,
-          title: topic.fancy_title,
+          title: topic.title,
         });
       }}
     >
       <Card style={{ margin: 5 }}>
         <Card.Content>
-          <Title>{topic.fancy_title}</Title>
-          <Caption>
+          <Title>{topic.title}</Title>
+          <Caption style={{}}>
             <Avatar.Image
               size={24}
               source={{
