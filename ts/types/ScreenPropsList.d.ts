@@ -1,6 +1,3 @@
-import { RouteProp } from "@react-navigation/core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
 type ScreenPropsList = {
   Home: undefined;
   Login: undefined;

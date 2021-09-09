@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import ScreenPropsList from "../types/ScreenPropsList";
 
@@ -11,7 +12,7 @@ const screenSlice = createSlice({
   initialState,
   reducers: {
     changeScreen: (state, action: PayloadAction<keyof ScreenPropsList>) => {
-      state.screenName = action.payload;
+      state.screenName = action.payload; // It's safe.
     },
   },
 });

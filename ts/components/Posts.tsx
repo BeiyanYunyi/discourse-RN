@@ -4,25 +4,10 @@ import { FlatList, useWindowDimensions } from "react-native";
 import { Button, Caption, Card } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
 import LinkRenderer from "../customRenderer/LinkRenderer";
-import { ViewTopicScreenNavigationProp } from "../screens/ViewTopicScreen";
 import PostType from "../types/PostType";
+import { ViewTopicScreenNavigationProp } from "../types/ScreenNavigationProps";
 import formatTime from "../utils/formatTime";
 import UserAvatar from "./UserAvatar";
-
-const Posts = ({ posts }: { posts: PostType[] }) => {
-  const flatListRef = React.useRef() as MutableRefObject<FlatList<PostType>>;
-  const renderPost = ({ item }: { item: PostType }) => (
-    <Post post={item} flatListRef={flatListRef} />
-  );
-  return (
-    <FlatList
-      data={posts}
-      renderItem={renderPost}
-      keyExtractor={(post) => post.post_number.toString()}
-      ref={flatListRef}
-    />
-  );
-};
 
 const renderers = { a: LinkRenderer };
 
@@ -92,4 +77,20 @@ const Post = ({
     </Card>
   );
 };
+
+const Posts = ({ posts }: { posts: PostType[] }) => {
+  const flatListRef = React.useRef() as MutableRefObject<FlatList<PostType>>;
+  const renderPost = ({ item }: { item: PostType }) => (
+    <Post post={item} flatListRef={flatListRef} />
+  );
+  return (
+    <FlatList
+      data={posts}
+      renderItem={renderPost}
+      keyExtractor={(post) => post.post_number.toString()}
+      ref={flatListRef}
+    />
+  );
+};
+
 export default Posts;

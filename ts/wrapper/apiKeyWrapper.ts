@@ -15,10 +15,9 @@ const apiKeyWrapper = {
     );
     if (!keyInDB) {
       return false;
-    } else {
-      this.key = keyInDB;
-      return true;
     }
+    this.key = keyInDB;
+    return true;
   },
 };
 

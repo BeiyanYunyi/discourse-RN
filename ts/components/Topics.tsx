@@ -2,25 +2,12 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Pressable, View } from "react-native";
 import { Card } from "react-native-paper";
-import { HomeScreenNavigationProp } from "../screens/HomeScreen";
+import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
 import TopicsListType from "../types/Topics/TopicsListType";
 import TopicType from "../types/Topics/TopicType";
 import UserType from "../types/Topics/UserType";
 import formatTime from "../utils/formatTime";
 import UserAvatar from "./UserAvatar";
-
-const Topics = ({ topicList }: { topicList: TopicsListType }) => {
-  return (
-    <View>
-      {topicList.topics.map((topic) => {
-        const user = topicList.users.find(
-          (user) => user.username === topic.last_poster_username
-        )!;
-        return <Topic topic={topic} user={user} key={topic.id} />;
-      })}
-    </View>
-  );
-};
 
 const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -44,6 +31,20 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
         <Card.Content>{topic.excerpt}</Card.Content>
       </Card>
     </Pressable>
+  );
+};
+
+const Topics = ({ topicList }: { topicList: TopicsListType }) => {
+  return (
+    <View>
+      {topicList.topics.map((topic) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const user = topicList.users.find(
+          (user) => user.username === topic.last_poster_username
+        )!;
+        return <Topic topic={topic} user={user} key={topic.id} />;
+      })}
+    </View>
   );
 };
 

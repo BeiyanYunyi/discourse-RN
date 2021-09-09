@@ -1,16 +1,9 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Topics from "../components/Topics";
-import ScreenPropsList from "../types/ScreenPropsList";
 import TopicType from "../types/Topics/TopicType";
 import UserType from "../types/Topics/UserType";
 import discourseWrapper from "../wrapper/discourseWrapper";
-
-export type HomeScreenNavigationProp = NativeStackNavigationProp<
-  ScreenPropsList,
-  "Home"
->;
 
 const styles = StyleSheet.create({
   container: {

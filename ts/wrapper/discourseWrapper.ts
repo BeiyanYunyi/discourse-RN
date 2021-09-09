@@ -19,8 +19,9 @@ const discourseWrapper = {
 
   async getTopics(page = 0) {
     const { data }: { data: GetTopicResType } = await axios.get(
-      `${config.url}/latest.json` +
-        (page ? `?no_definitions=true&page=${page}` : ""),
+      `${config.url}/latest.json${
+        page ? `?no_definitions=true&page=${page}` : ""
+      }`,
       {
         headers: {
           "User-Api-Key": apiKeyWrapper.key,

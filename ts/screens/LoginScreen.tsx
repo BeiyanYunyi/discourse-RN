@@ -1,20 +1,13 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import Toast from "react-native-root-toast";
 import WebView from "react-native-webview";
 import config from "../config/config";
 import { changeScreen } from "../redux/screenReducer";
 import { useAppDispatch } from "../redux/store";
-import ScreenPropsList from "../types/ScreenPropsList";
 import serializeParams from "../utils/serializeParams";
 import apiKeyWrapper from "../wrapper/apiKeyWrapper";
 import jsEncrypt from "../wrapper/jsEncryptWrapper";
 import rsaKeyWrapper from "../wrapper/rsaKeyWrapper";
-
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  ScreenPropsList,
-  "Login"
->;
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();

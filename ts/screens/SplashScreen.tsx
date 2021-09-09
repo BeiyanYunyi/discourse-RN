@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import React from "react";
 import { Image, View } from "react-native";
 import { Text } from "react-native-paper";
@@ -9,10 +10,10 @@ import rsaKeyWrapper from "../wrapper/rsaKeyWrapper";
 
 const SplashScreen = () => {
   const dispatch = useAppDispatch();
-  let logged = true;
   const [text, setText] = React.useState("加载中\n获取加密公私钥对");
 
   React.useEffect(() => {
+    let logged = true;
     rsaKeyWrapper
       .init()
       .then(() => {
@@ -29,7 +30,7 @@ const SplashScreen = () => {
       .then(() => {
         if (logged) dispatch(changeScreen("Home"));
       });
-  }, []);
+  }, [dispatch]);
   return (
     <View
       style={{
