@@ -31,7 +31,8 @@
     "react-native-web": "~0.13.12",
     "react-native-webview": "^11.13.0",
     "react-redux": "^7.2.5",
-    "redux": "^4.1.1"
+    "redux": "^4.1.1",
+    "text-loader": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

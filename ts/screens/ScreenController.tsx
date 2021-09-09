@@ -6,6 +6,7 @@ import LoginScreen from "./LoginScreen";
 import ScreenPropsList from "../types/ScreenPropsList";
 import SplashScreen from "./SplashScreen";
 import ViewTopicScreen from "./ViewTopicScreen";
+import EditorScreen from "./EditorScreen";
 
 const ScreenController = () => {
   const screenName = useAppSelector((state) => state.screen.screenName);
@@ -27,6 +28,11 @@ const ScreenController = () => {
                 <Stack.Screen
                   name="Topic"
                   component={ViewTopicScreen}
+                  options={({ route }) => ({ title: route.params.title })}
+                />
+                <Stack.Screen
+                  name="Editor"
+                  component={EditorScreen}
                   options={({ route }) => ({ title: route.params.title })}
                 />
               </>

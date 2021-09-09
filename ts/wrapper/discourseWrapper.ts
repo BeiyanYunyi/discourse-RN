@@ -35,6 +35,25 @@ const discourseWrapper = {
     return { users, topics, nextPage };
   },
 
+  async replyToPost(raw: string, replyToPostNumber: number, topicId: number) {
+    const { data } = await axios.post(
+      `${config.url}/posts.json`,
+      {
+        raw,
+        topic_id: topicId,
+        reply_to_post_number: replyToPostNumber,
+      },
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+        },
+      }
+    );
+    return data;
+  },
+
   getAvatarAddr(template: string) {
     return config.url + template.replace("{size}", "128");
   },

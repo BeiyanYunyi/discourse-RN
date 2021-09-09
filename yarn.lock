@@ -7622,6 +7622,7 @@ fsevents@^1.2.7:
     react-native-webview: ^11.13.0
     react-redux: ^7.2.5
     redux: ^4.1.1
+    text-loader: ^0.0.1
     typescript: ~4.0.0
   languageName: unknown
   linkType: soft
@@ -8328,6 +8329,13 @@ fsevents@^1.2.7:
     os-tmpdir: ^1.0.0
     rimraf: ~2.2.6
   checksum: bfc6f1223dd568c21efb279433f40dbb4fe269da2ca2c622f6f50276751325ba9a2888628a342bc2c56764164ee6430229319604cf0a862d480151f8ae65ca5b
+  languageName: node
+  linkType: hard
+
+"text-loader@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "text-loader@npm:0.0.1"
+  checksum: e8131024df8312bf123930215617dcaa2c8d002e416655c08d5ba3b11f9bca915fff42af23b4395870848b20ff4265be4c3d970c1a43a36ef18374a114f1f32d
   languageName: node
   linkType: hard
 

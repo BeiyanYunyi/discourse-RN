@@ -1,5 +1,4 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Topics from "../components/Topics";
@@ -36,7 +35,6 @@ const HomeScreen = () => {
   return (
     <>
       <ScrollView style={styles.container}>
-        <StatusBar style="auto" />
         {text && <Topics topicList={text} />}
       </ScrollView>
     </>

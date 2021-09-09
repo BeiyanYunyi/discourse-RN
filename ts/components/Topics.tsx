@@ -1,22 +1,13 @@
-import TopicsListType from "../types/Topics/TopicsListType";
-import React from "react";
-import {
-  Card,
-  Title,
-  Paragraph,
-  Caption,
-  Avatar,
-  Button,
-} from "react-native-paper";
-import TopicType from "../types/Topics/TopicType";
-import { View, Image, Pressable } from "react-native";
-import UserType from "../types/Topics/UserType";
-import { formatDistance } from "date-fns";
-import { zhCN } from "date-fns/locale";
-import discourseWrapper from "../wrapper/discourseWrapper";
 import { useNavigation } from "@react-navigation/core";
+import React from "react";
+import { Pressable, View } from "react-native";
+import { Card } from "react-native-paper";
 import { HomeScreenNavigationProp } from "../screens/HomeScreen";
-import config from "../config/config";
+import TopicsListType from "../types/Topics/TopicsListType";
+import TopicType from "../types/Topics/TopicType";
+import UserType from "../types/Topics/UserType";
+import formatTime from "../utils/formatTime";
+import UserAvatar from "./UserAvatar";
 
 const Topics = ({ topicList }: { topicList: TopicsListType }) => {
   return (
@@ -32,7 +23,6 @@ const Topics = ({ topicList }: { topicList: TopicsListType }) => {
 };
 
 const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
-  const lastReplyTime = new Date(topic.last_posted_at);
   const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
     <Pressable
@@ -44,20 +34,14 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
       }}
     >
       <Card style={{ margin: 5 }}>
-        <Card.Content>
-          <Title>{topic.title}</Title>
-          <Caption style={{}}>
-            <Avatar.Image
-              size={24}
-              source={{
-                uri: discourseWrapper.getAvatarAddr(user.avatar_template),
-                headers: { "User-Agent": config.userAgent },
-              }}
-            />
-            最后回复于
-            {formatDistance(new Date(), lastReplyTime, { locale: zhCN })}前
-          </Caption>
-        </Card.Content>
+        <Card.Title
+          title={topic.title}
+          subtitle={formatTime(topic.last_posted_at, "最后回复于  ")}
+          left={(props) => (
+            <UserAvatar {...props} avatarAddr={user.avatar_template} />
+          )}
+        />
+        <Card.Content>{topic.excerpt}</Card.Content>
       </Card>
     </Pressable>
   );

@@ -1,15 +1,21 @@
 import { RouteProp, useRoute } from "@react-navigation/core";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native";
 import Posts from "../components/Posts";
 import PostType from "../types/PostType";
 import ScreenPropsList from "../types/ScreenPropsList";
 import discourseWrapper from "../wrapper/discourseWrapper";
 
-type ViewTopicScreenNavigationProp = RouteProp<ScreenPropsList, "Topic">;
+type ViewTopicScreenRouteProp = RouteProp<ScreenPropsList, "Topic">;
+
+export type ViewTopicScreenNavigationProp = NativeStackNavigationProp<
+  ScreenPropsList,
+  "Home"
+>;
 
 const ViewTopicScreen = () => {
-  const route = useRoute<ViewTopicScreenNavigationProp>();
+  const route = useRoute<ViewTopicScreenRouteProp>();
   const [posts, setPosts] = React.useState<PostType[]>([]);
   React.useEffect(() => {
     discourseWrapper
@@ -17,9 +23,9 @@ const ViewTopicScreen = () => {
       .then(({ posts }) => setPosts(posts));
   }, []);
   return (
-    <ScrollView style={{ backgroundColor: "#000" }}>
+    <SafeAreaView style={{ backgroundColor: "#000" }}>
       <Posts posts={posts} />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

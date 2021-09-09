@@ -24,3 +24,4 @@ web-build/
 # private info
 Response*.json
 test.rest
+config.ts
