@@ -73,6 +73,9 @@ const Post = ({
         >
           {post.reply_count}
         </Button>
+        <Button icon="thumb-up">
+          {post.actions_summary.find((obj) => obj && obj.id === 2)?.count || 0}
+        </Button>
       </Card.Actions>
     </Card>
   );

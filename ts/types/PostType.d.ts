@@ -1,3 +1,5 @@
+import ActionsSummaryType from "./ActionsSummaryType";
+
 export default interface PostType {
   id: number;
   name: string;
@@ -33,7 +35,7 @@ export default interface PostType {
   user_title: string;
   title_is_group: boolean;
   bookmarked: boolean;
-  actions_summary: unknown[];
+  actions_summary: ActionsSummaryType;
   moderator: boolean;
   admin: boolean;
   staff: boolean;

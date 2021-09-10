@@ -1,8 +1,8 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import Topics from "../components/Topics";
-import TopicType from "../types/Topics/TopicType";
-import UserType from "../types/Topics/UserType";
+import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
 import discourseWrapper from "../wrapper/discourseWrapper";
 
 const styles = StyleSheet.create({
@@ -14,22 +14,19 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = () => {
-  const [text, setText] = React.useState<{
-    users: UserType[];
-    topics: TopicType[];
-    nextPage: number;
-  }>();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
   React.useEffect(() => {
     (async () => {
-      const res = await discourseWrapper.getTopics();
-      setText(res);
+      const siteInfo = await discourseWrapper.getSiteInfo();
+      navigation.setOptions({ title: siteInfo.title });
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
-      <ScrollView style={styles.container}>
-        {text && <Topics topicList={text} />}
-      </ScrollView>
+      <SafeAreaView style={styles.container}>
+        <Topics />
+      </SafeAreaView>
     </>
   );
 };

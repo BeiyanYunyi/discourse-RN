@@ -1,12 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import appInfo from "../../app.json";
 import { useAppSelector } from "../redux/store";
+import ScreenPropsList from "../types/ScreenPropsList";
+import EditorScreen from "./EditorScreen";
 import HomeScreen from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
-import ScreenPropsList from "../types/ScreenPropsList";
 import SplashScreen from "./SplashScreen";
 import ViewTopicScreen from "./ViewTopicScreen";
-import EditorScreen from "./EditorScreen";
 
 const ScreenController = () => {
   const screenName = useAppSelector((state) => state.screen.screenName);
@@ -23,7 +24,9 @@ const ScreenController = () => {
                 <Stack.Screen
                   name="Home"
                   component={HomeScreen}
-                  options={{ title: "之坛app" }}
+                  options={{
+                    title: appInfo.expo.name,
+                  }}
                 />
                 <Stack.Screen
                   name="Topic"

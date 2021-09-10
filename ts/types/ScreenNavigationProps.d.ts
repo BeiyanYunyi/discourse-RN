@@ -3,7 +3,7 @@ import ScreenPropsList from "./ScreenPropsList";
 
 export type ViewTopicScreenNavigationProp = NativeStackNavigationProp<
   ScreenPropsList,
-  "Home"
+  "Topic"
 >;
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<
