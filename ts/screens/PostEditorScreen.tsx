@@ -1,23 +1,26 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import Editor from "../components/Editor";
+import PostEditor from "../components/PostEditor";
 import ScreenPropsList from "../types/ScreenPropsList";
 import discourseWrapper from "../wrapper/discourseWrapper";
 
-export type EditorScreenRouteProp = RouteProp<ScreenPropsList, "Editor">;
-
-type EditorScreenNavigationProp = NativeStackNavigationProp<
+export type PostEditorScreenRouteProp = RouteProp<
   ScreenPropsList,
-  "Editor"
+  "PostEditor"
 >;
 
-const EditorScreen = () => {
-  const route = useRoute<EditorScreenRouteProp>();
-  const navigation = useNavigation<EditorScreenNavigationProp>();
+type PostEditorScreenNavigationProp = NativeStackNavigationProp<
+  ScreenPropsList,
+  "PostEditor"
+>;
+
+const PostEditorScreen = () => {
+  const route = useRoute<PostEditorScreenRouteProp>();
+  const navigation = useNavigation<PostEditorScreenNavigationProp>();
   return (
     <>
-      <Editor
+      <PostEditor
         onMessage={async (msg) => {
           const data = await discourseWrapper.replyToPost(
             msg.nativeEvent.data,
@@ -32,4 +35,4 @@ const EditorScreen = () => {
   );
 };
 
-export default EditorScreen;
+export default PostEditorScreen;

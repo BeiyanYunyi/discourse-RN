@@ -1,9 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import appInfo from "../../app.json";
 import { useAppSelector } from "../redux/store";
 import ScreenPropsList from "../types/ScreenPropsList";
-import EditorScreen from "./EditorScreen";
+import PostEditorScreen from "./PostEditorScreen";
 import HomeScreen from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
 import SplashScreen from "./SplashScreen";
@@ -25,7 +24,7 @@ const ScreenController = () => {
                   name="Home"
                   component={HomeScreen}
                   options={{
-                    title: appInfo.expo.name,
+                    title: "Loading...",
                   }}
                 />
                 <Stack.Screen
@@ -34,8 +33,8 @@ const ScreenController = () => {
                   options={({ route }) => ({ title: route.params.title })}
                 />
                 <Stack.Screen
-                  name="Editor"
-                  component={EditorScreen}
+                  name="PostEditor"
+                  component={PostEditorScreen}
                   options={({ route }) => ({ title: route.params.title })}
                 />
               </>

@@ -30,4 +30,5 @@ export default interface TopicType {
   pinned_globally: boolean;
   featured_link: null;
   posters: unknown[];
+  last_read_post_number?: number;
 }

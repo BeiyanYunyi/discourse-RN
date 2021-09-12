@@ -25,3 +25,4 @@ web-build/
 Response*.json
 test.rest
 config.ts
+test.html

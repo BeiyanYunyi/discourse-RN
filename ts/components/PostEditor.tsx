@@ -1,7 +1,7 @@
 import React from "react";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 
-const Editor = ({
+const PostEditor = ({
   onMessage,
 }: {
   onMessage: (event: WebViewMessageEvent) => void;
@@ -98,4 +98,4 @@ const Editor = ({
   );
 };
 
-export default Editor;
+export default PostEditor;

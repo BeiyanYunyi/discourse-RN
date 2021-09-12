@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { MutableRefObject } from "react";
-import { FlatList, Pressable, View } from "react-native";
-import { ActivityIndicator, Card } from "react-native-paper";
+import { FlatList, Pressable } from "react-native";
+import { Card } from "react-native-paper";
 import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
 import TopicsListType from "../types/Topics/TopicsListType";
 import TopicType from "../types/Topics/TopicType";
@@ -18,6 +18,7 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
         navigation.navigate("Topic", {
           topicID: topic.id,
           title: topic.title,
+          progress: topic.last_read_post_number,
         });
       }}
     >
@@ -41,6 +42,10 @@ const Topics = () => {
     topics: [],
     nextPage: 0,
   });
+  const refresh = async () => {
+    const res = await discourseWrapper.getTopics();
+    setTopicList(res);
+  };
   const [loading, setLoading] = React.useState(false);
   React.useEffect(() => {
     (async () => {
@@ -56,39 +61,29 @@ const Topics = () => {
     return <Topic topic={item} user={user} key={item.id} />;
   };
   return (
-    <View>
-      <FlatList
-        data={topicList.topics}
-        renderItem={renderTopic}
-        keyExtractor={(topic) => topic.id.toString()}
-        ref={flatListRef}
-        onEndReachedThreshold={0.1}
-        onEndReached={async () => {
-          if (!loading) {
-            setLoading(true);
-            const res = await discourseWrapper.getTopics(topicList.nextPage);
-            setTopicList((topicList) => ({
-              users: Array.from(new Set(topicList.users.concat(res.users))),
-              topics: Array.from(new Set(topicList.topics.concat(res.topics))),
-              nextPage: res.nextPage,
-            }));
-            setLoading(false);
-          }
-        }}
-      />
-      {loading && (
-        <ActivityIndicator
-          animating
-          size={32}
-          style={{
-            position: "absolute",
-            margin: 16,
-            right: 0,
-            top: 0,
-          }}
-        />
-      )}
-    </View>
+    <FlatList
+      data={topicList.topics}
+      renderItem={renderTopic}
+      keyExtractor={(topic) => topic.id.toString()}
+      ref={flatListRef}
+      onEndReachedThreshold={0.1}
+      onEndReached={async () => {
+        if (!loading) {
+          setLoading(true);
+          const res = await discourseWrapper.getTopics(topicList.nextPage);
+          setTopicList((topicList) => ({
+            users: Array.from(new Set(topicList.users.concat(res.users))),
+            topics: Array.from(new Set(topicList.topics.concat(res.topics))),
+            nextPage: res.nextPage,
+          }));
+          setLoading(false);
+        }
+      }}
+      refreshing={loading}
+      onRefresh={() => {
+        refresh();
+      }}
+    />
   );
 };
 
