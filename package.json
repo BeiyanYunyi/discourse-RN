@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.10",
     "date-fns": "^2.23.0",
     "expo": "~42.0.1",
+    "expo-app-loading": "^1.1.2",
     "expo-secure-store": "~10.2.0",
     "expo-status-bar": "~1.0.4",
     "htmlparser2": "^7.1.1",

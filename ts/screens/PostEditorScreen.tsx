@@ -1,7 +1,9 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import PostEditor from "../components/PostEditor";
+import Editor from "../components/Editor";
+import { addPostToBottom } from "../redux/postsReducer";
+import { useAppDispatch } from "../redux/store";
 import ScreenPropsList from "../types/ScreenPropsList";
 import discourseWrapper from "../wrapper/discourseWrapper";
 
@@ -17,17 +19,18 @@ type PostEditorScreenNavigationProp = NativeStackNavigationProp<
 
 const PostEditorScreen = () => {
   const route = useRoute<PostEditorScreenRouteProp>();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<PostEditorScreenNavigationProp>();
   return (
     <>
-      <PostEditor
+      <Editor
         onMessage={async (msg) => {
           const data = await discourseWrapper.replyToPost(
             msg.nativeEvent.data,
             route.params.replyToPostNumber,
             route.params.topicId
           );
-          console.log(data);
+          dispatch(addPostToBottom(data));
           navigation.goBack();
         }}
       />

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import postsReducer from "./postsReducer";
 import screenReducer from "./screenReducer";
 
 export const store = configureStore({
-  reducer: { screen: screenReducer },
+  reducer: { screen: screenReducer, posts: postsReducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

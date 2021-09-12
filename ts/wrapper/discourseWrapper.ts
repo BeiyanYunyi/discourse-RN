@@ -90,23 +90,6 @@ class DiscourseWrapper {
     return { users, topics, nextPage };
   }
 
-  async getPosts(topicID: number, after: number) {
-    const {
-      data,
-    }: { data: { post_stream: { posts: PostType[]; stream: number[] } } } =
-      await this.client.get(
-        `${config.url}/t/${topicID}/${after}.json?include_suggested=false`,
-        {
-          headers: {
-            "User-Api-Key": apiKeyWrapper.key,
-            "User-Api-Client-Id": config.clientId,
-            "User-Agent": config.userAgent,
-          },
-        }
-      );
-    return data.post_stream.posts;
-  }
-
   async replyToPost(raw: string, replyToPostNumber: number, topicId: number) {
     const { data } = await this.client.post(
       `${config.url}/posts.json`,
