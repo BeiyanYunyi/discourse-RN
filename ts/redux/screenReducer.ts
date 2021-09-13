@@ -5,7 +5,7 @@ import ScreenPropsList from "../types/ScreenPropsList";
 export interface ScreenState {
   screenName: keyof ScreenPropsList;
 }
-const initialState: ScreenState = { screenName: "Splash" };
+const initialState: ScreenState = { screenName: "Login" };
 
 const screenSlice = createSlice({
   name: "screenName",

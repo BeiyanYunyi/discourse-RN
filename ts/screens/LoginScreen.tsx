@@ -1,5 +1,4 @@
 import React from "react";
-import Toast from "react-native-root-toast";
 import WebView from "react-native-webview";
 import config from "../config/config";
 import { changeScreen } from "../redux/screenReducer";
@@ -42,14 +41,6 @@ const LoginScreen = () => {
         if (dec) {
           const decObj = JSON.parse(dec);
           await apiKeyWrapper.changeKey(decObj.key);
-          Toast.show("登录成功", {
-            duration: Toast.durations.SHORT,
-            position: Toast.positions.BOTTOM,
-            shadow: true,
-            animation: true,
-            hideOnPress: true,
-            delay: 0,
-          });
           dispatch(changeScreen("Home"));
         }
       }}

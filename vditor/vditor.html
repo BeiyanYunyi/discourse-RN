@@ -20,6 +20,30 @@
         height: window.innerHeight / 2,
         width: "100%",
         placeholder: "Type here",
+        upload: {
+          url: "${siteURL}/uploads.json",
+          headers: {
+            "User-Api-Key": "${apiKey}",
+            "User-Api-Client-Id": "${clientId}",
+            "User-Agent": "${userAgent}",
+          },
+          multiple: false,
+          extraData: { type: "composer" },
+          fieldName: "files[]",
+          format(f, res) {
+            const parsedRes = JSON.parse(res);
+            return JSON.stringify({
+              msg: "",
+              code: 0,
+              data: {
+                errFiles: [],
+                succMap: {
+                  [parsedRes.original_filename]: parsedRes.url,
+                },
+              },
+            });
+          },
+        },
         toolbar: [
           "emoji",
           "headings",

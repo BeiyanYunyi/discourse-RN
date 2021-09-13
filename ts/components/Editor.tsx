@@ -1,11 +1,16 @@
 import React from "react";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import config from "../config/config";
+import apiKeyWrapper from "../wrapper/apiKeyWrapper";
 
 const PostEditor = ({
   onMessage,
 }: {
   onMessage: (event: WebViewMessageEvent) => void;
 }) => {
+  const siteURL = config.url;
+  const { clientId, userAgent } = config;
+  const apiKey = apiKeyWrapper.key;
   return (
     <WebView
       originWhitelist={["*"]}
@@ -33,6 +38,30 @@ const PostEditor = ({
                 height: window.innerHeight / 2,
                 width: "100%",
                 placeholder: "Type here",
+                upload: {
+                  url: "${siteURL}/uploads.json",
+                  headers: {
+                    "User-Api-Key": "${apiKey}",
+                    "User-Api-Client-Id": "${clientId}",
+                    "User-Agent": "${userAgent}",
+                  },
+                  multiple: false,
+                  extraData: { type: "composer" },
+                  fieldName: "files[]",
+                  format(f, res) {
+                    const parsedRes = JSON.parse(res);
+                    return JSON.stringify({
+                      msg: "",
+                      code: 0,
+                      data: {
+                        errFiles: [],
+                        succMap: {
+                          [parsedRes.original_filename]: parsedRes.url,
+                        },
+                      },
+                    });
+                  },
+                },
                 toolbar: [
                   "emoji",
                   "headings",
@@ -93,6 +122,11 @@ const PostEditor = ({
             </script>
           </body>
         </html>`,
+        headers: {
+          "User-Api-Key": apiKey,
+          "User-Api-Client-Id": clientId,
+          "User-Agent": userAgent,
+        },
       }}
     />
   );

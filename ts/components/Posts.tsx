@@ -1,17 +1,32 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/core";
+import { appendChild, removeElement } from "domutils";
+import { Element } from "domhandler";
 import React, { MutableRefObject } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
-import { Button, Caption, Card, useTheme } from "react-native-paper";
+import {
+  Button,
+  Caption,
+  Card,
+  FAB,
+  TouchableRipple,
+  useTheme,
+} from "react-native-paper";
 import RenderHTML from "react-native-render-html";
 import LinkRenderer from "../customRenderer/LinkRenderer";
 import TextRenderer from "../customRenderer/TextRenderer";
-import { getNewerPosts, initPosts } from "../redux/postsReducer";
+import {
+  getNewerPosts,
+  getOlderPosts,
+  initPosts,
+  postActionToAPost,
+} from "../redux/postsReducer";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import PostType from "../types/PostType";
 import { ViewTopicScreenNavigationProp } from "../types/ScreenNavigationProps";
 import ScreenPropsList from "../types/ScreenPropsList";
 import formatTime from "../utils/formatTime";
 import UserAvatar from "./UserAvatar";
+import ImageRenderer from "../customRenderer/ImageRenderer";
 
 const Post = ({
   post,
@@ -25,10 +40,12 @@ const Post = ({
   const renderers = {
     a: LinkRenderer,
     p: TextRenderer,
+    img: ImageRenderer,
   };
   const { width } = useWindowDimensions();
   const navigation = useNavigation<ViewTopicScreenNavigationProp>();
   const { colors } = useTheme();
+  const dispatch = useAppDispatch();
 
   return (
     <Card style={{ margin: 5 }}>
@@ -36,7 +53,11 @@ const Post = ({
         title={post.username}
         subtitle={`# ${post.post_number}`}
         left={(props) => (
-          <UserAvatar {...props} avatarAddr={post.avatar_template} />
+          // Prepared for user info query.
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          <TouchableRipple onPress={() => {}}>
+            <UserAvatar {...props} avatarAddr={post.avatar_template} />
+          </TouchableRipple>
         )}
         right={(props) =>
           replyIndex ? (
@@ -44,13 +65,17 @@ const Post = ({
               icon="reply"
               {...props}
               mode="text"
-              onPress={() => {
-                flatListRef.current.scrollToIndex({
-                  index: replyIndex,
-                });
-              }}
+              onPress={
+                replyIndex !== -1
+                  ? () => {
+                      flatListRef.current.scrollToIndex({
+                        index: replyIndex,
+                      });
+                    }
+                  : undefined
+              }
             >
-              # {post.reply_to_post_number}
+              # {replyIndex !== -1 ? post.reply_to_post_number : "已删除"}
             </Button>
           ) : undefined
         }
@@ -66,6 +91,17 @@ const Post = ({
           ignoredDomTags={["svg"]}
           renderers={renderers}
           defaultTextProps={{ selectable: true, style: { color: colors.text } }}
+          domVisitors={{
+            onElement(ele) {
+              if (ele.name === "a" && ele.attribs.class === "lightbox") {
+                const src = ele.attribs.href;
+                const img = ele.firstChild as unknown as Element;
+                img.attribs.src = src;
+                appendChild(ele.parent as unknown as Element, img!);
+                removeElement(ele);
+              }
+            },
+          }}
         />
       </Card.Content>
       <Card.Actions>
@@ -82,7 +118,14 @@ const Post = ({
         >
           {post.reply_count}
         </Button>
-        <Button icon="thumb-up">
+        <Button
+          icon="thumb-up"
+          onPress={() => {
+            dispatch(
+              postActionToAPost({ postId: post.id, postActionTypeId: 2 })
+            );
+          }}
+        >
           {post.actions_summary.find((obj) => obj && obj.id === 2)?.count || 0}
         </Button>
       </Card.Actions>
@@ -93,6 +136,7 @@ const Post = ({
 type ViewTopicScreenRouteProp = RouteProp<ScreenPropsList, "Topic">;
 
 const Posts = () => {
+  const navigation = useNavigation<ViewTopicScreenNavigationProp>();
   const route = useRoute<ViewTopicScreenRouteProp>();
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.posts.posts);
@@ -137,14 +181,31 @@ const Posts = () => {
           }
         }}
         onRefresh={() => {
+          const targetPostNumber = posts[0].post_number - 15;
           dispatch(
-            initPosts({
+            getOlderPosts({
               topicID: route.params.topicID,
-              progress: route.params.progress,
+              progress: targetPostNumber > 1 ? targetPostNumber : undefined,
             })
           );
         }}
         refreshing={loading}
+      />
+      <FAB
+        icon="reply"
+        onPress={() => {
+          navigation.navigate("PostEditor", {
+            replyToPostNumber: 1,
+            topicId: posts[0].topic_id,
+            title: `回复 #1`,
+          });
+        }}
+        style={{
+          position: "absolute",
+          margin: 16,
+          right: 0,
+          bottom: 0,
+        }}
       />
     </>
   );

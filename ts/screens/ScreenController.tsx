@@ -2,10 +2,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useAppSelector } from "../redux/store";
 import ScreenPropsList from "../types/ScreenPropsList";
-import PostEditorScreen from "./PostEditorScreen";
 import HomeScreen from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
-import SplashScreen from "./SplashScreen";
+import PostEditorScreen from "./PostEditorScreen";
 import ViewTopicScreen from "./ViewTopicScreen";
 
 const ScreenController = () => {
@@ -16,46 +15,36 @@ const ScreenController = () => {
       initialRouteName={screenName === "Home" ? "Home" : undefined}
     >
       {(() => {
-        switch (screenName) {
-          case "Home":
-            return (
-              <>
-                <Stack.Screen
-                  name="Home"
-                  component={HomeScreen}
-                  options={{
-                    title: "Loading...",
-                  }}
-                />
-                <Stack.Screen
-                  name="Topic"
-                  component={ViewTopicScreen}
-                  options={({ route }) => ({ title: route.params.title })}
-                />
-                <Stack.Screen
-                  name="PostEditor"
-                  component={PostEditorScreen}
-                  options={({ route }) => ({ title: route.params.title })}
-                />
-              </>
-            );
-          case "Login":
-            return (
-              <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{ title: "登录并授权" }}
-              />
-            );
-          default:
-            return (
-              <Stack.Screen
-                name="Splash"
-                component={SplashScreen}
-                options={{ title: "加载中" }}
-              />
-            );
+        if (screenName === "Login") {
+          return (
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ title: "登录并授权" }}
+            />
+          );
         }
+        return (
+          <>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                title: "Loading...",
+              }}
+            />
+            <Stack.Screen
+              name="Topic"
+              component={ViewTopicScreen}
+              options={({ route }) => ({ title: route.params.title })}
+            />
+            <Stack.Screen
+              name="PostEditor"
+              component={PostEditorScreen}
+              options={({ route }) => ({ title: route.params.title })}
+            />
+          </>
+        );
       })()}
     </Stack.Navigator>
   );

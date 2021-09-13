@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { MutableRefObject } from "react";
 import { FlatList, Pressable } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
 import TopicsListType from "../types/Topics/TopicsListType";
 import TopicType from "../types/Topics/TopicType";
@@ -30,7 +30,17 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
             <UserAvatar {...props} avatarAddr={user.avatar_template} />
           )}
         />
-        <Card.Content>{topic.excerpt}</Card.Content>
+        {topic.image_url ? (
+          <Card.Cover
+            source={{ uri: topic.image_url }}
+            style={{ marginBottom: 16 }}
+          />
+        ) : undefined}
+        {topic.excerpt ? (
+          <Card.Content>
+            <Text>{topic.excerpt}</Text>
+          </Card.Content>
+        ) : undefined}
       </Card>
     </Pressable>
   );

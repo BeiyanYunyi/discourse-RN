@@ -20,6 +20,7 @@ export default interface TopicType {
   closed: boolean;
   archived: boolean;
   bookmarked: null;
+  excerpt: string | undefined;
   liked: null;
   tags: unknown[];
   views: number;

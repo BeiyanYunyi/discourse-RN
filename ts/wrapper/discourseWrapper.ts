@@ -18,6 +18,7 @@ class DiscourseWrapper {
         "User-Api-Key": apiKeyWrapper.key,
         "User-Api-Client-Id": config.clientId,
         "User-Agent": config.userAgent,
+        Accept: "application/json",
       },
     };
     this.client = axios.create({
@@ -104,6 +105,30 @@ class DiscourseWrapper {
           "User-Api-Key": apiKeyWrapper.key,
           "User-Api-Client-Id": config.clientId,
           "User-Agent": config.userAgent,
+        },
+      }
+    );
+    return data;
+  }
+
+  async postActionsToAPost(
+    postId: number,
+    postActionTypeId: number,
+    flagTopic = false
+  ) {
+    const { data }: { data: PostType } = await this.client.post(
+      `${config.url}/post_actions.json`,
+      {
+        id: postId,
+        post_action_type_id: postActionTypeId,
+        flag_topic: flagTopic,
+      },
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+          Accept: "application/json",
         },
       }
     );

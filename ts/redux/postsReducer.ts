@@ -22,11 +22,45 @@ export const initPosts = createAsyncThunk(
 export const getNewerPosts = createAsyncThunk(
   "posts/getNewerPosts",
   (
+    { topicID, progress }: { topicID: number; progress: number },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    thunkAPI
+  ) => {
+    return discourseWrapper.getTopic(topicID, progress);
+  }
+);
+
+export const getOlderPosts = createAsyncThunk(
+  "posts/getOlderPosts",
+  (
     { topicID, progress }: { topicID: number; progress?: number },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     thunkAPI
   ) => {
     return discourseWrapper.getTopic(topicID, progress);
+  }
+);
+
+export const postActionToAPost = createAsyncThunk(
+  "posts/postActionToAPost",
+  (
+    {
+      postId,
+      postActionTypeId,
+      flagTopic,
+    }: {
+      postId: number;
+      postActionTypeId: number;
+      flagTopic?: boolean;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    thunkAPI
+  ) => {
+    return discourseWrapper.postActionsToAPost(
+      postId,
+      postActionTypeId,
+      flagTopic
+    );
   }
 );
 
@@ -54,6 +88,20 @@ const postsSlice = createSlice({
       action.payload.posts.forEach((post) => {
         if (!postsNumbers.includes(post.post_number)) state.posts.push(post);
       });
+    });
+    builder.addCase(getOlderPosts.fulfilled, (state, action) => {
+      // eslint-disable-next-line no-param-reassign
+      const postsNumbers = state.posts.map((post) => post.post_number);
+      action.payload.posts.reverse().forEach((post) => {
+        if (!postsNumbers.includes(post.post_number)) state.posts.unshift(post);
+      });
+    });
+    builder.addCase(postActionToAPost.fulfilled, (state, action) => {
+      // eslint-disable-next-line no-param-reassign
+      const index = state.posts.findIndex(
+        (post) => post.id === action.payload.id
+      );
+      state.posts[index] = action.payload;
     });
   },
 });

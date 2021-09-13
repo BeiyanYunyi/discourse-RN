@@ -4302,7 +4302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:^4.0.0, domhandler@npm:^4.2.0":
+"domhandler@npm:^4.0.0, domhandler@npm:^4.2.0, domhandler@npm:^4.2.2":
   version: 4.2.2
   resolution: "domhandler@npm:4.2.2"
   dependencies:
@@ -6946,6 +6946,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lodash.toarray@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.toarray@npm:4.4.0"
+  checksum: 2eebcbe75734223b2526018b1c66f7f5e3e5e21e2caffde1553e3453393a676347f2adb7ecbf08364521c188dbf280bd88053604ea159a95121d44453916c31f
+  languageName: node
+  linkType: hard
+
 "lodash.truncate@npm:^4.4.2":
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
@@ -7679,6 +7686,15 @@ fsevents@^1.2.7:
   version: 2.1.0
   resolution: "nocache@npm:2.1.0"
   checksum: 702ad516a7f8b21364c3e9b6ed982b0dfbcbdad9c28ed35331c4025025c729eb9d93523c3370947c5c8391ae33c6f69b67e35ef301d0e9424cee84f0b1d015c2
+  languageName: node
+  linkType: hard
+
+"node-emoji@npm:1.10.0":
+  version: 1.10.0
+  resolution: "node-emoji@npm:1.10.0"
+  dependencies:
+    lodash.toarray: ^4.4.0
+  checksum: e2514e34591c58d907f17ab6a21bcd0f9d7ae311187fc490fb52704389a66f48f0ce84cc34e5baf593c1d96e7796e9350dc1bebe7db4d9379a114fb9e5b0011b
   languageName: node
   linkType: hard
 
@@ -8572,10 +8588,41 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-native-emoji@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "react-native-emoji@npm:1.8.0"
+  dependencies:
+    node-emoji: 1.10.0
+  checksum: faed02e36a9575314b4adb4325345501447c8833b895eef52f1734f8db24ccbff905edd6665a8ea36a07e9d1bf2ac9edaa0a73efefb2eb95c43be546d4b61d7d
+  languageName: node
+  linkType: hard
+
 "react-native-html-parser@npm:^0.1.0":
   version: 0.1.0
   resolution: "react-native-html-parser@npm:0.1.0"
   checksum: 2978ef0d0811d24756a27d5a0e58c1b2a11f97861249bde4221f83cdbd7a869fe0c61137d13c9abbee71ba6c48f7d4dff9c4aa7c21551f0246b728766d8d1d31
+  languageName: node
+  linkType: hard
+
+"react-native-image-pan-zoom@npm:^2.1.12":
+  version: 2.1.12
+  resolution: "react-native-image-pan-zoom@npm:2.1.12"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 826ed254d27b079cb985b63c65d0f504f11987b68ae71bac0e1c0e99dc24d5816fc9b8d053eb04737c60c018ad520a1e9c4b99af26952646ccabe9fc2b3bd64f
+  languageName: node
+  linkType: hard
+
+"react-native-image-zoom-viewer@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "react-native-image-zoom-viewer@npm:3.0.1"
+  dependencies:
+    react-native-image-pan-zoom: ^2.1.12
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: bd32e382100fece8f815bacabe276f8f05a7c1edc1ff8485149fd863780de7d11a1a8241b837adad957e53ce1e19ef249410fdb312bc43fb7071b57fb879b78d
   languageName: node
   linkType: hard
 
@@ -9133,6 +9180,8 @@ resolve@^2.0.0-next.3:
     axios: ^0.21.2
     cheerio: ^1.0.0-rc.10
     date-fns: ^2.23.0
+    domhandler: ^4.2.2
+    domutils: ^2.8.0
     eslint: ^7.32.0
     eslint-config-airbnb-typescript-prettier: ^4.2.0
     expo: ~42.0.1
@@ -9147,7 +9196,9 @@ resolve@^2.0.0-next.3:
     react: 16.13.1
     react-dom: 16.13.1
     react-native: "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz"
+    react-native-emoji: ^1.8.0
     react-native-html-parser: ^0.1.0
+    react-native-image-zoom-viewer: ^3.0.1
     react-native-paper: ^4.9.2
     react-native-render-html: ^6.1.0
     react-native-root-siblings: ^4.1.1
