@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import config from "../config/config";
 import PostType from "../types/PostType";
 import GetTopicResType from "../types/Topics/GetTopicsResType";
-import wait from "../utils/wait";
+import TopicType from "../types/Topics/TopicType";
 import apiKeyWrapper from "./apiKeyWrapper";
 
 // Using axios instance will cause bugs, I don't know why.
@@ -72,7 +72,6 @@ class DiscourseWrapper {
   }
 
   async getTopics(page = 0) {
-    await wait(1000);
     const { data }: { data: GetTopicResType } = await this.client.get(
       `${config.url}/latest.json${
         page ? `?no_definitions=true&page=${page}` : ""
@@ -92,7 +91,7 @@ class DiscourseWrapper {
   }
 
   async replyToPost(raw: string, replyToPostNumber: number, topicId: number) {
-    const { data } = await this.client.post(
+    const { data }: { data: PostType } = await this.client.post(
       `${config.url}/posts.json`,
       {
         raw,
@@ -138,6 +137,34 @@ class DiscourseWrapper {
   // eslint-disable-next-line class-methods-use-this
   getAvatarAddr(template: string) {
     return config.url + template.replace("{size}", "128");
+  }
+
+  async createTopic(raw: string, title: string) {
+    const { data }: { data: PostType } = await this.client.post(
+      `${config.url}/posts.json?include_suggested=false`,
+      {
+        raw,
+        title,
+      },
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+        },
+      }
+    );
+    const { data: topicData }: { data: TopicType } = await this.client.get(
+      `${config.url}/t/${data.topic_id}.json`,
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+        },
+      }
+    );
+    return topicData;
   }
 }
 

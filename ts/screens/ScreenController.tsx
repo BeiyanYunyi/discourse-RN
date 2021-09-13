@@ -5,6 +5,7 @@ import ScreenPropsList from "../types/ScreenPropsList";
 import HomeScreen from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
 import PostEditorScreen from "./PostEditorScreen";
+import TopicEditorScreen from "./TopicEditorScreen";
 import ViewTopicScreen from "./ViewTopicScreen";
 
 const ScreenController = () => {
@@ -42,6 +43,11 @@ const ScreenController = () => {
               name="PostEditor"
               component={PostEditorScreen}
               options={({ route }) => ({ title: route.params.title })}
+            />
+            <Stack.Screen
+              name="TopicEditor"
+              component={TopicEditorScreen}
+              options={{ title: "发帖" }}
             />
           </>
         );

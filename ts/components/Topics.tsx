@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { MutableRefObject } from "react";
 import { FlatList, Pressable } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, FAB, Text } from "react-native-paper";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { getOlderTopics, initTopics } from "../redux/topicsReducer";
 import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
-import TopicsListType from "../types/Topics/TopicsListType";
 import TopicType from "../types/Topics/TopicType";
 import UserType from "../types/Topics/UserType";
 import formatTime from "../utils/formatTime";
-import discourseWrapper from "../wrapper/discourseWrapper";
 import UserAvatar from "./UserAvatar";
 
 const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
@@ -47,53 +47,57 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
 };
 
 const Topics = () => {
-  const [topicList, setTopicList] = React.useState<TopicsListType>({
-    users: [],
-    topics: [],
-    nextPage: 0,
-  });
-  const refresh = async () => {
-    const res = await discourseWrapper.getTopics();
-    setTopicList(res);
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const topicList = useAppSelector((state) => state.topics);
+  const dispatch = useAppDispatch();
+  const refresh = () => {
+    dispatch(initTopics());
   };
   const [loading, setLoading] = React.useState(false);
   React.useEffect(() => {
-    (async () => {
-      const res = await discourseWrapper.getTopics();
-      setTopicList(res);
-    })();
-  }, []);
+    dispatch(initTopics());
+  }, [dispatch]);
   const flatListRef = React.useRef() as MutableRefObject<FlatList<TopicType>>;
   const renderTopic = ({ item }: { item: TopicType }) => {
-    const user = topicList.users.find(
-      (user) => user.username === item.last_poster_username
-    )!;
+    const user =
+      topicList.users.find(
+        (user) => user.username === item.last_poster_username
+      ) || item.details!.last_poster;
     return <Topic topic={item} user={user} key={item.id} />;
   };
   return (
-    <FlatList
-      data={topicList.topics}
-      renderItem={renderTopic}
-      keyExtractor={(topic) => topic.id.toString()}
-      ref={flatListRef}
-      onEndReachedThreshold={0.1}
-      onEndReached={async () => {
-        if (!loading) {
-          setLoading(true);
-          const res = await discourseWrapper.getTopics(topicList.nextPage);
-          setTopicList((topicList) => ({
-            users: Array.from(new Set(topicList.users.concat(res.users))),
-            topics: Array.from(new Set(topicList.topics.concat(res.topics))),
-            nextPage: res.nextPage,
-          }));
-          setLoading(false);
-        }
-      }}
-      refreshing={loading}
-      onRefresh={() => {
-        refresh();
-      }}
-    />
+    <>
+      <FlatList
+        data={topicList.topics}
+        renderItem={renderTopic}
+        keyExtractor={(topic) => topic.id.toString()}
+        ref={flatListRef}
+        onEndReachedThreshold={0.1}
+        onEndReached={async () => {
+          if (!loading) {
+            setLoading(true);
+            dispatch(getOlderTopics(topicList.nextPage));
+            setLoading(false);
+          }
+        }}
+        refreshing={loading}
+        onRefresh={() => {
+          refresh();
+        }}
+      />
+      <FAB
+        icon="plus"
+        onPress={() => {
+          navigation.navigate("TopicEditor");
+        }}
+        style={{
+          position: "absolute",
+          margin: 16,
+          right: 0,
+          bottom: 0,
+        }}
+      />
+    </>
   );
 };
 

@@ -118,6 +118,16 @@ const PostEditor = ({
                     },
                   },
                 ],
+                after: () => {
+                  const btns = Array.from(document.querySelectorAll("button"));
+                  btns
+                    .find(
+                      (btn) =>
+                        btn.attributes["data-type"] &&
+                        btn.attributes["data-type"].textContent === "fullscreen"
+                    )
+                    .dispatchEvent(new CustomEvent("click"));
+                },
               });
             </script>
           </body>

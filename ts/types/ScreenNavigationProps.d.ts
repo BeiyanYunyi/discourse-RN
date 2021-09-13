@@ -15,3 +15,13 @@ export type LoginScreenNavigationProp = NativeStackNavigationProp<
   ScreenPropsList,
   "Login"
 >;
+
+export type PostEditorScreenNavigationProp = NativeStackNavigationProp<
+  ScreenPropsList,
+  "PostEditor"
+>;
+
+export type TopicEditorScreenNavigationProp = NativeStackNavigationProp<
+  ScreenPropsList,
+  "TopicEditor"
+>;

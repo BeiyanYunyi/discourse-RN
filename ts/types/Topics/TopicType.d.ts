@@ -1,3 +1,5 @@
+import UserType from "./UserType";
+
 export default interface TopicType {
   id: number;
   title: string;
@@ -32,4 +34,19 @@ export default interface TopicType {
   featured_link: null;
   posters: unknown[];
   last_read_post_number?: number;
+  details?: {
+    notification_level: number;
+    can_move_posts: boolean;
+    can_edit: boolean;
+    can_delete: boolean;
+    can_remove_allowed_users: boolean;
+    can_create_post: boolean;
+    can_reply_as_new_topic: boolean;
+    can_flag_topic: boolean;
+    can_convert_topic: boolean;
+    can_review_topic: boolean;
+    can_remove_self_id: 0;
+    created_by: UserType;
+    last_poster: UserType;
+  };
 }
