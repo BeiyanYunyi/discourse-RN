@@ -7,6 +7,7 @@ export default interface PostType {
   avatar_template: string;
   created_at: string;
   cooked: string;
+  raw?: string;
   post_number: number;
   post_type: number;
   updated_at: string;
