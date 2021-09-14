@@ -3,8 +3,12 @@ import Emoji from "react-native-emoji";
 import { CustomBlockRenderer } from "react-native-render-html";
 import ImageModal from "../components/ImageModal";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ImageRenderer: CustomBlockRenderer = ({ TDefaultRenderer, ...props }) => {
-  if (props.tnode.attributes.class === "emoji") {
+  if (
+    props.tnode.attributes.class === "emoji" ||
+    props.tnode.attributes.class === "emoji only-emoji"
+  ) {
     return <Emoji name={props.tnode.attributes.title} />;
   }
   return (

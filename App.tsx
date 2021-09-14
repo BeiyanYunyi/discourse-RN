@@ -6,6 +6,7 @@ import AppLoading from "expo-app-loading";
 import React from "react";
 import { StatusBar } from "react-native";
 import { DarkTheme, Provider as PaperProvider } from "react-native-paper";
+import { RootSiblingParent } from "react-native-root-siblings";
 import { Provider } from "react-redux";
 import { changeScreen } from "./ts/redux/screenReducer";
 import { store } from "./ts/redux/store";
@@ -37,14 +38,16 @@ const App = () => {
     );
   }
   return (
-    <PaperProvider theme={DarkTheme}>
-      <Provider store={store}>
-        <NavigationContainer theme={NavigationDarkTheme}>
-          <ScreenController />
-          <StatusBar barStyle="light-content" />
-        </NavigationContainer>
-      </Provider>
-    </PaperProvider>
+    <RootSiblingParent>
+      <PaperProvider theme={DarkTheme}>
+        <Provider store={store}>
+          <NavigationContainer theme={NavigationDarkTheme}>
+            <ScreenController />
+            <StatusBar barStyle="light-content" />
+          </NavigationContainer>
+        </Provider>
+      </PaperProvider>
+    </RootSiblingParent>
   );
 };
 

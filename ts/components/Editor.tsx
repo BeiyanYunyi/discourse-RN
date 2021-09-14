@@ -1,12 +1,14 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { IconButton, Snackbar } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import config from "../config/config";
 import {
   PostEditorScreenNavigationProp,
   TopicEditorScreenNavigationProp,
 } from "../types/ScreenNavigationProps";
+import CustomedToast from "../utils/CustomedToast";
+import wait from "../utils/wait";
 import apiKeyWrapper from "../wrapper/apiKeyWrapper";
 
 const Editor = ({
@@ -18,8 +20,8 @@ const Editor = ({
     PostEditorScreenNavigationProp | TopicEditorScreenNavigationProp
   >();
   const webRef = React.useRef<WebView>(null);
-  const [confirmedLeave, setConfirmedLeave] = React.useState(false);
-  const [snackVisible, setSnackVisible] = React.useState(false);
+  let confirmedLeave = false;
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -39,8 +41,13 @@ const Editor = ({
       e.preventDefault();
       // Prompt the user before leaving the screen
       if (!confirmedLeave) {
-        setConfirmedLeave(true);
-        setSnackVisible(true);
+        // It's safe.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        confirmedLeave = true;
+        CustomedToast({ message: "再按一次退出" });
+        wait(3000).then(() => {
+          confirmedLeave = false;
+        });
         return;
       }
       navigation.dispatch(e.data.action);
@@ -50,25 +57,16 @@ const Editor = ({
   const { clientId, userAgent } = config;
   const apiKey = apiKeyWrapper.key;
   return (
-    <>
-      <Snackbar
-        visible={snackVisible}
-        onDismiss={() => {
-          setSnackVisible(false);
-        }}
-      >
-        确认？
-      </Snackbar>
-      <WebView
-        ref={webRef}
-        originWhitelist={["*"]}
-        onMessage={(e) => {
-          setConfirmedLeave(true);
-          onMessage(e);
-        }}
-        source={{
-          baseUrl: siteURL,
-          html: `<!DOCTYPE html>
+    <WebView
+      ref={webRef}
+      originWhitelist={["*"]}
+      onMessage={(e) => {
+        confirmedLeave = true;
+        onMessage(e);
+      }}
+      source={{
+        baseUrl: siteURL,
+        html: `<!DOCTYPE html>
           <html>
             <head>
               <meta
@@ -129,9 +127,8 @@ const Editor = ({
               </script>
             </body>
           </html>`,
-        }}
-      />
-    </>
+      }}
+    />
   );
 };
 

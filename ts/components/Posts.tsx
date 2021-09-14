@@ -1,17 +1,17 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/core";
-import { appendChild, removeElement } from "domutils";
 import { Element } from "domhandler";
+import { appendChild, removeElement } from "domutils";
 import React, { MutableRefObject } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 import {
   Button,
   Caption,
   Card,
-  FAB,
   TouchableRipple,
   useTheme,
 } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
+import ImageRenderer from "../customRenderer/ImageRenderer";
 import LinkRenderer from "../customRenderer/LinkRenderer";
 import TextRenderer from "../customRenderer/TextRenderer";
 import {
@@ -26,7 +26,6 @@ import { ViewTopicScreenNavigationProp } from "../types/ScreenNavigationProps";
 import ScreenPropsList from "../types/ScreenPropsList";
 import formatTime from "../utils/formatTime";
 import UserAvatar from "./UserAvatar";
-import ImageRenderer from "../customRenderer/ImageRenderer";
 
 const Post = ({
   post,
@@ -136,7 +135,6 @@ const Post = ({
 type ViewTopicScreenRouteProp = RouteProp<ScreenPropsList, "Topic">;
 
 const Posts = () => {
-  const navigation = useNavigation<ViewTopicScreenNavigationProp>();
   const route = useRoute<ViewTopicScreenRouteProp>();
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.posts.posts);
@@ -190,22 +188,6 @@ const Posts = () => {
           );
         }}
         refreshing={loading}
-      />
-      <FAB
-        icon="reply"
-        onPress={() => {
-          navigation.navigate("PostEditor", {
-            replyToPostNumber: 1,
-            topicId: posts[0].topic_id,
-            title: `回复 #1`,
-          });
-        }}
-        style={{
-          position: "absolute",
-          margin: 16,
-          right: 0,
-          bottom: 0,
-        }}
       />
     </>
   );
