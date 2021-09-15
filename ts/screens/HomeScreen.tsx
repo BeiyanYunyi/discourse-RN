@@ -8,7 +8,7 @@ const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   React.useEffect(() => {
     (async () => {
-      const siteInfo = await discourseWrapper.getSiteInfo();
+      const siteInfo = await discourseWrapper.getSiteBasicInfo();
       navigation.setOptions({ title: siteInfo.title });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

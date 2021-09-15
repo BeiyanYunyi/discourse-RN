@@ -64,6 +64,23 @@ export const postActionToAPost = createAsyncThunk(
   }
 );
 
+export const withdrawPostAction = createAsyncThunk(
+  "posts/withdrawPostAction",
+  (
+    {
+      postId,
+      postActionTypeId,
+    }: {
+      postId: number;
+      postActionTypeId: number;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    thunkAPI
+  ) => {
+    return discourseWrapper.withdrawPostAction(postId, postActionTypeId);
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -97,6 +114,13 @@ const postsSlice = createSlice({
       });
     });
     builder.addCase(postActionToAPost.fulfilled, (state, action) => {
+      // eslint-disable-next-line no-param-reassign
+      const index = state.posts.findIndex(
+        (post) => post.id === action.payload.id
+      );
+      state.posts[index] = action.payload;
+    });
+    builder.addCase(withdrawPostAction.fulfilled, (state, action) => {
       // eslint-disable-next-line no-param-reassign
       const index = state.posts.findIndex(
         (post) => post.id === action.payload.id

@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import config from "../config/config";
 import PostType from "../types/PostType";
+import SiteBasicInfo from "../types/SiteBasicInfo";
+import SiteInfo from "../types/SiteInfo";
 import GetTopicResType from "../types/Topics/GetTopicsResType";
 import TopicType from "../types/Topics/TopicType";
 import apiKeyWrapper from "./apiKeyWrapper";
@@ -31,10 +33,27 @@ class DiscourseWrapper {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  async getSiteBasicInfo() {
+    const { data }: { data: SiteBasicInfo } = await axios.get(
+      `${config.url}/site/basic-info.json`,
+      {
+        headers: { "User-Agent": config.userAgent },
+      }
+    );
+    return data;
+  }
+
   async getSiteInfo() {
-    const { data } = await axios.get(`${config.url}/site/basic-info.json`, {
-      headers: { "User-Agent": config.userAgent },
-    });
+    const { data }: { data: SiteInfo } = await this.client.get(
+      `${config.url}/site.json`,
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+        },
+      }
+    );
     return data;
   }
 
@@ -128,6 +147,24 @@ class DiscourseWrapper {
           "User-Api-Client-Id": config.clientId,
           "User-Agent": config.userAgent,
           Accept: "application/json",
+        },
+      }
+    );
+    return data;
+  }
+
+  async withdrawPostAction(postId: number, postActionTypeId: number) {
+    const { data }: { data: PostType } = await this.client.delete(
+      `${config.url}/post_actions/${postId}.json`,
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+          Accept: "application/json",
+        },
+        data: {
+          post_action_type_id: postActionTypeId,
         },
       }
     );

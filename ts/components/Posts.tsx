@@ -19,6 +19,7 @@ import {
   getOlderPosts,
   initPosts,
   postActionToAPost,
+  withdrawPostAction,
 } from "../redux/postsReducer";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import PostType from "../types/PostType";
@@ -45,6 +46,17 @@ const Post = ({
   const navigation = useNavigation<ViewTopicScreenNavigationProp>();
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
+  const thumbUpToPost = !post.yours
+    ? () => {
+        if (post.actions_summary.find((obj) => obj && obj.id === 2)?.can_act) {
+          dispatch(postActionToAPost({ postId: post.id, postActionTypeId: 2 }));
+        } else {
+          dispatch(
+            withdrawPostAction({ postId: post.id, postActionTypeId: 2 })
+          );
+        }
+      }
+    : undefined;
 
   return (
     <Card style={{ margin: 5 }}>
@@ -86,10 +98,11 @@ const Post = ({
           baseStyle={{
             textAlign: "left",
             alignContent: "flex-start",
+            color: colors.text,
           }}
           ignoredDomTags={["svg"]}
           renderers={renderers}
-          defaultTextProps={{ selectable: true, style: { color: colors.text } }}
+          defaultTextProps={{ selectable: true }}
           domVisitors={{
             onElement(ele) {
               if (ele.name === "a" && ele.attribs.class === "lightbox") {
@@ -117,14 +130,7 @@ const Post = ({
         >
           {post.reply_count}
         </Button>
-        <Button
-          icon="thumb-up"
-          onPress={() => {
-            dispatch(
-              postActionToAPost({ postId: post.id, postActionTypeId: 2 })
-            );
-          }}
-        >
+        <Button icon="thumb-up" onPress={thumbUpToPost}>
           {post.actions_summary.find((obj) => obj && obj.id === 2)?.count || 0}
         </Button>
       </Card.Actions>

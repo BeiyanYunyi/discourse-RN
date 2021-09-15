@@ -28,8 +28,10 @@ const Editor = ({
         <IconButton
           icon="send"
           onPress={() => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            confirmedLeave = true;
             webRef.current?.injectJavaScript(
-              "window.ReactNativeWebView.postMessage(window.vd.getValue());true;"
+              "window.vd.clearCache();window.ReactNativeWebView.postMessage(window.vd.getValue());true;"
             );
           }}
         />
@@ -88,6 +90,7 @@ const Editor = ({
                 height: window.innerHeight / 2,
                 width: "100%",
                 placeholder: "Type here",
+                typewriterMode: true,
                 upload: {
                   url: "${siteURL}/uploads.json",
                   headers: {
@@ -112,7 +115,6 @@ const Editor = ({
                     });
                   },
                 },
-                cache: { enable: false },
                 after: () => {
                   vd.setTheme("dark", "dark");
                   const btns = Array.from(document.querySelectorAll("button"));
