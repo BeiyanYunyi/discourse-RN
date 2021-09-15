@@ -176,12 +176,13 @@ class DiscourseWrapper {
     return config.url + template.replace("{size}", "128");
   }
 
-  async createTopic(raw: string, title: string) {
+  async createTopic(raw: string, title: string, category?: number) {
     const { data }: { data: PostType } = await this.client.post(
       `${config.url}/posts.json?include_suggested=false`,
       {
         raw,
         title,
+        category,
       },
       {
         headers: {

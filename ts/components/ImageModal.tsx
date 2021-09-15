@@ -24,7 +24,10 @@ const ImageModal = ({
       <TouchableRipple onPress={showModal}>
         <Image
           source={{ uri: src }}
-          style={{ height: height / 4, width: width - 48 }}
+          style={{
+            height: Math.min(height / 4, imgHeight || Infinity),
+            width: Math.min(width - 48, imgHeight || Infinity),
+          }}
         />
       </TouchableRipple>
     );

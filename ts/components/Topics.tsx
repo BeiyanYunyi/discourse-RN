@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { MutableRefObject } from "react";
 import { FlatList, Pressable } from "react-native";
-import { Card, FAB, Text } from "react-native-paper";
+import { Caption, Card, FAB, Text } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { getOlderTopics, initTopics } from "../redux/topicsReducer";
 import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
@@ -12,6 +12,7 @@ import UserAvatar from "./UserAvatar";
 
 const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const categories = useAppSelector((state) => state.siteInfo.categories);
   return (
     <Pressable
       onPress={() => {
@@ -22,10 +23,12 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
         });
       }}
     >
-      <Card style={{ margin: 5 }}>
+      <Card style={{ margin: 5, marginBottom: 0 }}>
         <Card.Title
           title={topic.title}
-          subtitle={formatTime(topic.last_posted_at, "最后回复于  ")}
+          subtitle={
+            categories.find((item) => item.id === topic.category_id)?.name
+          }
           left={(props) => (
             <UserAvatar {...props} avatarAddr={user.avatar_template} />
           )}
@@ -41,6 +44,9 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
             <Text>{topic.excerpt}</Text>
           </Card.Content>
         ) : undefined}
+        <Card.Actions>
+          <Caption>{formatTime(topic.last_posted_at, "最后回复于  ")}</Caption>
+        </Card.Actions>
       </Card>
     </Pressable>
   );

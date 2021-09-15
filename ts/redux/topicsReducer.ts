@@ -24,10 +24,10 @@ const topicsSlice = createSlice({
     addTopicToTop: (state, action: PayloadAction<TopicType>) => {
       const userIds = state.users.map((user) => user.id);
       if (
-        action.payload.last_poster &&
-        !userIds.includes(action.payload.last_poster?.id)
+        action.payload.details?.last_poster &&
+        !userIds.includes(action.payload.details?.last_poster?.id)
       ) {
-        state.users.push(action.payload.last_poster);
+        state.users.push(action.payload.details?.last_poster);
       }
       state.topics.unshift(action.payload);
     },

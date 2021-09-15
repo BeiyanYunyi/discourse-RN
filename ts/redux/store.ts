@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import postsReducer from "./postsReducer";
 import screenReducer from "./screenReducer";
+import siteInfoReducer from "./siteInfoReducer";
 import topicsReducer from "./topicsReducer";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     screen: screenReducer,
     posts: postsReducer,
     topics: topicsReducer,
+    siteInfo: siteInfoReducer,
   },
 });
 

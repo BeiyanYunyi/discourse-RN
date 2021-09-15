@@ -45,7 +45,7 @@ interface ColorSchemeType {
   user_selectable: boolean;
 }
 
-interface CategoryType {
+export interface CategoryType {
   id: number;
   name: string;
   color: string;

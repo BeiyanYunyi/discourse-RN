@@ -4,7 +4,7 @@ import { CustomBlockRenderer } from "react-native-render-html";
 
 const LinkRenderer: CustomBlockRenderer = ({ TDefaultRenderer, ...props }) => {
   const navigation = useNavigation();
-  return <TDefaultRenderer {...props} onPress={() => {}} />;
+  return <TDefaultRenderer {...props} />;
 };
 
 export default LinkRenderer;

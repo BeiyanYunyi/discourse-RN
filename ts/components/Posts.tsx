@@ -59,7 +59,7 @@ const Post = ({
     : undefined;
 
   return (
-    <Card style={{ margin: 5 }}>
+    <Card style={{ margin: 5, marginBottom: 0 }}>
       <Card.Title
         title={post.username}
         subtitle={`# ${post.post_number}`}
