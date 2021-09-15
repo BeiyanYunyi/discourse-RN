@@ -5,6 +5,7 @@ import Editor from "../components/Editor";
 import { useAppDispatch } from "../redux/store";
 import { addTopicToTop } from "../redux/topicsReducer";
 import { TopicEditorScreenNavigationProp } from "../types/ScreenNavigationProps";
+import CustomedToast from "../utils/CustomedToast";
 import discourseWrapper from "../wrapper/discourseWrapper";
 
 const TopicTitle = React.forwardRef((_props, ref) => {
@@ -14,6 +15,7 @@ const TopicTitle = React.forwardRef((_props, ref) => {
   });
   return (
     <TextInput
+      dense
       mode="outlined"
       label="title"
       onChangeText={(text) => setTitle(text)}
@@ -40,6 +42,8 @@ const TopicEditorScreen = () => {
             );
             dispatch(addTopicToTop(data));
             navigation.goBack();
+          } else {
+            CustomedToast({ message: "请输入标题" });
           }
         }}
       />

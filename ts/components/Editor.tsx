@@ -44,7 +44,7 @@ const Editor = ({
         // It's safe.
         // eslint-disable-next-line react-hooks/exhaustive-deps
         confirmedLeave = true;
-        CustomedToast({ message: "再按一次退出" });
+        CustomedToast({ message: "再按一次返回" });
         wait(3000).then(() => {
           confirmedLeave = false;
         });
@@ -67,66 +67,67 @@ const Editor = ({
       source={{
         baseUrl: siteURL,
         html: `<!DOCTYPE html>
-          <html>
-            <head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-              />
-              <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/vditor@3.8.6/dist/index.css"
-              />
-            </head>
-          
-            <body>
-              <script src="https://cdn.jsdelivr.net/npm/vditor@3.8.6/dist/index.min.js"></script>
-              <div id="vditor" />
-              <script type="application/javascript">
-                window.vd = new Vditor("vditor", {
-                  icon: "material",
-                  height: window.innerHeight / 2,
-                  width: "100%",
-                  placeholder: "Type here",
-                  upload: {
-                    url: "${siteURL}/uploads.json",
-                    headers: {
-                      "User-Api-Key": "${apiKey}",
-                      "User-Api-Client-Id": "${clientId}",
-                      "User-Agent": "${userAgent}",
-                    },
-                    multiple: false,
-                    extraData: { type: "composer" },
-                    fieldName: "files[]",
-                    format(f, res) {
-                      const parsedRes = JSON.parse(res);
-                      return JSON.stringify({
-                        msg: "",
-                        code: 0,
-                        data: {
-                          errFiles: [],
-                          succMap: {
-                            [parsedRes.original_filename]: parsedRes.url,
-                          },
+        <html>
+          <head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+            />
+            <link
+              rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/vditor@3.8.6/dist/index.css"
+            />
+          </head>
+        
+          <body>
+            <script src="https://cdn.jsdelivr.net/npm/vditor@3.8.6/dist/index.min.js"></script>
+            <div id="vditor" />
+            <script type="application/javascript">
+              window.vd = new Vditor("vditor", {
+                icon: "material",
+                height: window.innerHeight / 2,
+                width: "100%",
+                placeholder: "Type here",
+                upload: {
+                  url: "${siteURL}/uploads.json",
+                  headers: {
+                    "User-Api-Key": "${apiKey}",
+                    "User-Api-Client-Id": "${clientId}",
+                    "User-Agent": "${userAgent}",
+                  },
+                  multiple: false,
+                  extraData: { type: "composer" },
+                  fieldName: "files[]",
+                  format(f, res) {
+                    const parsedRes = JSON.parse(res);
+                    return JSON.stringify({
+                      msg: "",
+                      code: 0,
+                      data: {
+                        errFiles: [],
+                        succMap: {
+                          [parsedRes.original_filename]: parsedRes.url,
                         },
-                      });
-                    },
+                      },
+                    });
                   },
-                  cache: { enable: false },
-                  after: () => {
-                    const btns = Array.from(document.querySelectorAll("button"));
-                    btns
-                      .find(
-                        (btn) =>
-                          btn.attributes["data-type"] &&
-                          btn.attributes["data-type"].textContent === "fullscreen"
-                      )
-                      .dispatchEvent(new CustomEvent("click"));
-                  },
-                });
-              </script>
-            </body>
-          </html>`,
+                },
+                cache: { enable: false },
+                after: () => {
+                  vd.setTheme("dark", "dark");
+                  const btns = Array.from(document.querySelectorAll("button"));
+                  btns
+                    .find(
+                      (btn) =>
+                        btn.attributes["data-type"] &&
+                        btn.attributes["data-type"].textContent === "fullscreen"
+                    )
+                    .dispatchEvent(new CustomEvent("click"));
+                },
+              });
+            </script>
+          </body>
+        </html>`,
       }}
     />
   );

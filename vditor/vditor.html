@@ -46,6 +46,7 @@
         },
         cache: { enable: false },
         after: () => {
+          vd.setTheme("dark", "dark");
           const btns = Array.from(document.querySelectorAll("button"));
           btns
             .find(

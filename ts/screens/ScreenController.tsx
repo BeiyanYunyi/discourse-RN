@@ -42,12 +42,15 @@ const ScreenController = () => {
             <Stack.Screen
               name="PostEditor"
               component={PostEditorScreen}
-              options={({ route }) => ({ title: route.params.title })}
+              options={({ route }) => ({
+                title: route.params.title,
+                headerBackVisible: false,
+              })}
             />
             <Stack.Screen
               name="TopicEditor"
               component={TopicEditorScreen}
-              options={{ title: "发帖" }}
+              options={{ title: "发帖", headerBackVisible: false }}
             />
           </>
         );
