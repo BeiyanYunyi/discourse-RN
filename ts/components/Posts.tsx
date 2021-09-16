@@ -26,6 +26,7 @@ import PostType from "../types/PostType";
 import { ViewTopicScreenNavigationProp } from "../types/ScreenNavigationProps";
 import ScreenPropsList from "../types/ScreenPropsList";
 import formatTime from "../utils/formatTime";
+import discourseWrapper from "../wrapper/discourseWrapper";
 import UserAvatar from "./UserAvatar";
 
 const Post = ({
@@ -145,6 +146,8 @@ const Posts = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.posts.posts);
   const [loading, setLoading] = React.useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [time, setTime] = React.useState(Date.now());
   React.useEffect(() => {
     dispatch(
       initPosts({
@@ -180,6 +183,11 @@ const Posts = () => {
                 topicID: route.params.topicID,
                 progress: posts[posts.length - 1].post_number,
               })
+            );
+            await discourseWrapper.markPostAsRead(
+              posts[posts.length - 1].post_number,
+              posts[posts.length - 1].topic_id,
+              Date.now() - time
             );
             setLoading(false);
           }

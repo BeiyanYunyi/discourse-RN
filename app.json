@@ -20,10 +20,10 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000000"
       },
       "package": "club.penclub.discourse.rn",
-      "versionCode": 1
+      "versionCode": 0
     },
     "web": {
       "favicon": "./assets/favicon.png"

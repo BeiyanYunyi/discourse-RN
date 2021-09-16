@@ -5,6 +5,7 @@ import SiteBasicInfo from "../types/SiteBasicInfo";
 import SiteInfo from "../types/SiteInfo";
 import GetTopicResType from "../types/Topics/GetTopicsResType";
 import TopicType from "../types/Topics/TopicType";
+import serializeParams from "../utils/serializeParams";
 import apiKeyWrapper from "./apiKeyWrapper";
 
 // Using axios instance will cause bugs, I don't know why.
@@ -203,6 +204,27 @@ class DiscourseWrapper {
       }
     );
     return topicData;
+  }
+
+  async markPostAsRead(postNumber: number, topicId: number, time = 1000) {
+    const req = {
+      topic_id: topicId.toString(),
+      topic_time: time.toString(),
+    };
+    // there's no fix for TypeScript, but it works.
+    req[`timings[${postNumber}]`] = time.toString();
+    const { data } = await this.client.post(
+      `${config.url}/topics/timings.json`,
+      serializeParams(req),
+      {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+        },
+      }
+    );
+    return data;
   }
 }
 
