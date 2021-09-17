@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { useAppSelector } from "../redux/store";
-import ScreenPropsList from "../types/ScreenPropsList";
+import { useAppSelector } from "../../redux/store";
+import ScreenPropsList from "../../types/ScreenPropsList";
 import HomeScreen from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
 import PostEditorScreen from "./PostEditorScreen";

@@ -1,3 +1,4 @@
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import {
   DarkTheme as NavigationDarkTheme,
   NavigationContainer,
@@ -10,7 +11,8 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { Provider } from "react-redux";
 import { changeScreen } from "./ts/redux/screenReducer";
 import { store } from "./ts/redux/store";
-import ScreenController from "./ts/screens/ScreenController";
+import MainScreenController from "./ts/screens/mainScreen/MainScreenController";
+import NotificationScreen from "./ts/screens/NotificationScreen";
 import apiKeyWrapper from "./ts/wrapper/apiKeyWrapper";
 import rsaKeyWrapper from "./ts/wrapper/rsaKeyWrapper";
 
@@ -26,6 +28,8 @@ const App = () => {
     if (loggedIn === true) store.dispatch(changeScreen("Home"));
   };
   const [loading, setLoading] = React.useState(true);
+  const { screenName } = store.getState().screen;
+  const Tab = createMaterialBottomTabNavigator();
   if (loading) {
     return (
       <AppLoading
@@ -42,7 +46,27 @@ const App = () => {
       <PaperProvider theme={DarkTheme}>
         <Provider store={store}>
           <NavigationContainer theme={NavigationDarkTheme}>
-            <ScreenController />
+            <Tab.Navigator initialRouteName="main">
+              <Tab.Screen
+                name="main"
+                component={MainScreenController}
+                options={{ title: "主页", tabBarIcon: "home" }}
+              />
+              {screenName === "Home" && (
+                <>
+                  <Tab.Screen
+                    name="notifications"
+                    component={NotificationScreen}
+                    options={{ title: "通知", tabBarIcon: "bell" }}
+                  />
+                  <Tab.Screen
+                    name="account"
+                    component={NotificationScreen}
+                    options={{ title: "我", tabBarIcon: "account" }}
+                  />
+                </>
+              )}
+            </Tab.Navigator>
             <StatusBar barStyle="light-content" />
           </NavigationContainer>
         </Provider>

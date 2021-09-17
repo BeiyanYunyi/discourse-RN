@@ -1,11 +1,11 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
-import Editor from "../components/Editor";
-import { addPostToBottom } from "../redux/postsReducer";
-import { useAppDispatch } from "../redux/store";
-import { PostEditorScreenNavigationProp } from "../types/ScreenNavigationProps";
-import ScreenPropsList from "../types/ScreenPropsList";
-import discourseWrapper from "../wrapper/discourseWrapper";
+import Editor from "../../components/Editor";
+import { addPostToBottom } from "../../redux/postsReducer";
+import { useAppDispatch } from "../../redux/store";
+import { PostEditorScreenNavigationProp } from "../../types/ScreenNavigationProps";
+import ScreenPropsList from "../../types/ScreenPropsList";
+import discourseWrapper from "../../wrapper/discourseWrapper";
 
 export type PostEditorScreenRouteProp = RouteProp<
   ScreenPropsList,

@@ -1,12 +1,12 @@
 import React from "react";
 import WebView from "react-native-webview";
-import config from "../config/config";
-import { changeScreen } from "../redux/screenReducer";
-import { useAppDispatch } from "../redux/store";
-import serializeParams from "../utils/serializeParams";
-import apiKeyWrapper from "../wrapper/apiKeyWrapper";
-import jsEncrypt from "../wrapper/jsEncryptWrapper";
-import rsaKeyWrapper from "../wrapper/rsaKeyWrapper";
+import config from "../../config/config";
+import { changeScreen } from "../../redux/screenReducer";
+import { useAppDispatch } from "../../redux/store";
+import serializeParams from "../../utils/serializeParams";
+import apiKeyWrapper from "../../wrapper/apiKeyWrapper";
+import jsEncrypt from "../../wrapper/jsEncryptWrapper";
+import rsaKeyWrapper from "../../wrapper/rsaKeyWrapper";
 
 const LoginScreen = () => {
   const dispatch = useAppDispatch();

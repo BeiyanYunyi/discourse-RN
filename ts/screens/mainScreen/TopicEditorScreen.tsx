@@ -12,13 +12,13 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Editor from "../components/Editor";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { addTopicToTop } from "../redux/topicsReducer";
-import { TopicEditorScreenNavigationProp } from "../types/ScreenNavigationProps";
-import { CategoryType } from "../types/SiteInfo";
-import CustomedToast from "../utils/CustomedToast";
-import discourseWrapper from "../wrapper/discourseWrapper";
+import Editor from "../../components/Editor";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { addTopicToTop } from "../../redux/topicsReducer";
+import { TopicEditorScreenNavigationProp } from "../../types/ScreenNavigationProps";
+import { CategoryType } from "../../types/SiteInfo";
+import CustomedToast from "../../utils/CustomedToast";
+import discourseWrapper from "../../wrapper/discourseWrapper";
 
 const CategorySelector = React.forwardRef((_props, ref) => {
   const categories = useAppSelector((state) => state.siteInfo.categories);

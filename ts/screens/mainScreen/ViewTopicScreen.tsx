@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { FAB } from "react-native-paper";
-import Posts from "../components/Posts";
-import { clearPosts } from "../redux/postsReducer";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { ViewTopicScreenNavigationProp } from "../types/ScreenNavigationProps";
+import Posts from "../../components/Posts";
+import { clearPosts } from "../../redux/postsReducer";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { ViewTopicScreenNavigationProp } from "../../types/ScreenNavigationProps";
 
 const ViewTopicScreen = () => {
   const navigation = useNavigation<ViewTopicScreenNavigationProp>();

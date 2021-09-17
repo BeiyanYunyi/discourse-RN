@@ -7,8 +7,6 @@ import {
   PostEditorScreenNavigationProp,
   TopicEditorScreenNavigationProp,
 } from "../types/ScreenNavigationProps";
-import CustomedToast from "../utils/CustomedToast";
-import wait from "../utils/wait";
 import apiKeyWrapper from "../wrapper/apiKeyWrapper";
 
 const Editor = ({
@@ -20,7 +18,6 @@ const Editor = ({
     PostEditorScreenNavigationProp | TopicEditorScreenNavigationProp
   >();
   const webRef = React.useRef<WebView>(null);
-  let confirmedLeave = false;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,7 +26,6 @@ const Editor = ({
           icon="send"
           onPress={() => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
-            confirmedLeave = true;
             webRef.current?.injectJavaScript(
               "window.vd.clearCache();window.ReactNativeWebView.postMessage(window.vd.getValue());true;"
             );
@@ -38,23 +34,6 @@ const Editor = ({
       ),
     });
   });
-  React.useEffect(() => {
-    navigation.addListener("beforeRemove", (e) => {
-      e.preventDefault();
-      // Prompt the user before leaving the screen
-      if (!confirmedLeave) {
-        // It's safe.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        confirmedLeave = true;
-        CustomedToast({ message: "再按一次返回" });
-        wait(3000).then(() => {
-          confirmedLeave = false;
-        });
-        return;
-      }
-      navigation.dispatch(e.data.action);
-    });
-  }, [confirmedLeave, navigation]);
   const siteURL = config.url;
   const { clientId, userAgent } = config;
   const apiKey = apiKeyWrapper.key;
@@ -62,10 +41,7 @@ const Editor = ({
     <WebView
       ref={webRef}
       originWhitelist={["*"]}
-      onMessage={(e) => {
-        confirmedLeave = true;
-        onMessage(e);
-      }}
+      onMessage={onMessage}
       source={{
         baseUrl: siteURL,
         html: `<!DOCTYPE html>

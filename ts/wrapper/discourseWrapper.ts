@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import config from "../config/config";
+import NotificationResType from "../types/NotificationType";
 import PostType from "../types/PostType";
 import SiteBasicInfo from "../types/SiteBasicInfo";
 import SiteInfo from "../types/SiteInfo";
@@ -45,15 +46,17 @@ class DiscourseWrapper {
   }
 
   async getSiteInfo() {
+    this.config = {
+      headers: {
+        "User-Api-Key": apiKeyWrapper.key,
+        "User-Api-Client-Id": config.clientId,
+        "User-Agent": config.userAgent,
+        Accept: "application/json",
+      },
+    };
+    this.client = axios.create(this.config);
     const { data }: { data: SiteInfo } = await this.client.get(
-      `${config.url}/site.json`,
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
-      }
+      `${config.url}/site.json`
     );
     return data;
   }
@@ -64,14 +67,7 @@ class DiscourseWrapper {
         data,
       }: { data: { post_stream: { posts: PostType[]; stream: number[] } } } =
         await this.client.get(
-          `${config.url}/t/${topicID}/${progress}.json?include_suggested=false`,
-          {
-            headers: {
-              "User-Api-Key": apiKeyWrapper.key,
-              "User-Api-Client-Id": config.clientId,
-              "User-Agent": config.userAgent,
-            },
-          }
+          `${config.url}/t/${topicID}/${progress}.json?include_suggested=false`
         );
       return data.post_stream;
     }
@@ -79,30 +75,25 @@ class DiscourseWrapper {
       data,
     }: { data: { post_stream: { posts: PostType[]; stream: number[] } } } =
       await this.client.get(
-        `${config.url}/t/${topicID}.json?track_visit=true&forceLoad=true`,
-        {
-          headers: {
-            "User-Api-Key": apiKeyWrapper.key,
-            "User-Api-Client-Id": config.clientId,
-            "User-Agent": config.userAgent,
-          },
-        }
+        `${config.url}/t/${topicID}.json?track_visit=true&forceLoad=true`
       );
     return data.post_stream;
   }
 
   async getTopics(page = 0) {
+    this.config = {
+      headers: {
+        "User-Api-Key": apiKeyWrapper.key,
+        "User-Api-Client-Id": config.clientId,
+        "User-Agent": config.userAgent,
+        Accept: "application/json",
+      },
+    };
+    this.client = axios.create(this.config);
     const { data }: { data: GetTopicResType } = await this.client.get(
       `${config.url}/latest.json${
         page ? `?no_definitions=true&page=${page}` : ""
-      }`,
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
-      }
+      }`
     );
     const { users } = data;
     const { topics, more_topics_url } = data.topic_list;
@@ -118,13 +109,6 @@ class DiscourseWrapper {
         topic_id: topicId,
         reply_to_post_number:
           replyToPostNumber !== 1 ? replyToPostNumber : undefined,
-      },
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
       }
     );
     return data;
@@ -141,14 +125,6 @@ class DiscourseWrapper {
         id: postId,
         post_action_type_id: postActionTypeId,
         flag_topic: flagTopic,
-      },
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-          Accept: "application/json",
-        },
       }
     );
     return data;
@@ -158,12 +134,6 @@ class DiscourseWrapper {
     const { data }: { data: PostType } = await this.client.delete(
       `${config.url}/post_actions/${postId}.json`,
       {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-          Accept: "application/json",
-        },
         data: {
           post_action_type_id: postActionTypeId,
         },
@@ -184,24 +154,10 @@ class DiscourseWrapper {
         raw,
         title,
         category,
-      },
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
       }
     );
     const { data: topicData }: { data: TopicType } = await this.client.get(
-      `${config.url}/t/${data.topic_id}.json`,
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
-      }
+      `${config.url}/t/${data.topic_id}.json`
     );
     return topicData;
   }
@@ -215,14 +171,14 @@ class DiscourseWrapper {
     req[`timings[${postNumber}]`] = time.toString();
     const { data } = await this.client.post(
       `${config.url}/topics/timings.json`,
-      serializeParams(req),
-      {
-        headers: {
-          "User-Api-Key": apiKeyWrapper.key,
-          "User-Api-Client-Id": config.clientId,
-          "User-Agent": config.userAgent,
-        },
-      }
+      serializeParams(req)
+    );
+    return data;
+  }
+
+  async getNotifications() {
+    const { data }: { data: NotificationResType } = await this.client.get(
+      `${config.url}/notifications`
     );
     return data;
   }

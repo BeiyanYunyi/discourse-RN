@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import Topics from "../components/Topics";
-import { initSiteInfo } from "../redux/siteInfoReducer";
-import { useAppDispatch } from "../redux/store";
-import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
-import discourseWrapper from "../wrapper/discourseWrapper";
+import Topics from "../../components/Topics";
+import { initSiteInfo } from "../../redux/siteInfoReducer";
+import { useAppDispatch } from "../../redux/store";
+import { HomeScreenNavigationProp } from "../../types/ScreenNavigationProps";
+import discourseWrapper from "../../wrapper/discourseWrapper";
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
