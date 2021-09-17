@@ -81,24 +81,31 @@ class DiscourseWrapper {
   }
 
   async getTopics(page = 0) {
-    this.config = {
-      headers: {
-        "User-Api-Key": apiKeyWrapper.key,
-        "User-Api-Client-Id": config.clientId,
-        "User-Agent": config.userAgent,
-        Accept: "application/json",
-      },
-    };
-    this.client = axios.create(this.config);
-    const { data }: { data: GetTopicResType } = await this.client.get(
-      `${config.url}/latest.json${
-        page ? `?no_definitions=true&page=${page}` : ""
-      }`
-    );
-    const { users } = data;
-    const { topics, more_topics_url } = data.topic_list;
-    const nextPage = Number(more_topics_url.split("&")[1].replace("page=", ""));
-    return { users, topics, nextPage };
+    try {
+      this.config = {
+        headers: {
+          "User-Api-Key": apiKeyWrapper.key,
+          "User-Api-Client-Id": config.clientId,
+          "User-Agent": config.userAgent,
+          Accept: "application/json",
+        },
+      };
+      this.client = axios.create(this.config);
+      const { data }: { data: GetTopicResType } = await this.client.get(
+        `${config.url}/latest.json${
+          page ? `?no_definitions=true&page=${page}` : ""
+        }`
+      );
+      const { users } = data;
+      const { topics, more_topics_url } = data.topic_list;
+      const nextPage = Number(
+        more_topics_url.split("&")[1].replace("page=", "")
+      );
+      return { users, topics, nextPage };
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
   }
 
   async replyToPost(raw: string, replyToPostNumber: number, topicId: number) {

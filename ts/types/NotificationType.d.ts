@@ -1,4 +1,4 @@
-interface NotificationType {
+export interface NotificationType {
   id: number;
   user_id: number;
   notification_type: number;
@@ -6,6 +6,7 @@ interface NotificationType {
   created_at: string;
   post_number: string;
   topic_id: number;
+  fancy_title: string;
   slug: string;
   data: {
     badge_id: number;
@@ -13,6 +14,7 @@ interface NotificationType {
     badge_slug: string;
     badge_title: true;
     username: string;
+    topic_title: string;
   };
 }
 

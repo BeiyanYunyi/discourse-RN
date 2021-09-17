@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import notificationReducer from "./notificationReducer";
 import postsReducer from "./postsReducer";
 import screenReducer from "./screenReducer";
 import siteInfoReducer from "./siteInfoReducer";
@@ -11,6 +12,7 @@ export const store = configureStore({
     posts: postsReducer,
     topics: topicsReducer,
     siteInfo: siteInfoReducer,
+    notifications: notificationReducer,
   },
 });
 
