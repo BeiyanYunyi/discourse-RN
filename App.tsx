@@ -4,11 +4,13 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
+import * as Localization from "expo-localization";
 import React from "react";
 import { StatusBar } from "react-native";
 import { DarkTheme, Provider as PaperProvider } from "react-native-paper";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { Provider } from "react-redux";
+import appI18n from "./ts/i18n/controller";
 import { changeScreen } from "./ts/redux/screenReducer";
 import { store } from "./ts/redux/store";
 import MainScreenController from "./ts/screens/mainScreen/MainScreenController";
@@ -18,6 +20,7 @@ import rsaKeyWrapper from "./ts/wrapper/rsaKeyWrapper";
 
 const App = () => {
   const init = async () => {
+    appI18n.locale = Localization.locale;
     let loggedIn = true;
     await rsaKeyWrapper.init();
     const res = await apiKeyWrapper.init();
@@ -50,19 +53,25 @@ const App = () => {
               <Tab.Screen
                 name="main"
                 component={MainScreenController}
-                options={{ title: "主页", tabBarIcon: "home" }}
+                options={{ title: appI18n.t("mainPage"), tabBarIcon: "home" }}
               />
               {screenName === "Home" && (
                 <>
                   <Tab.Screen
                     name="notifications"
                     component={NotificationScreen}
-                    options={{ title: "通知", tabBarIcon: "bell" }}
+                    options={{
+                      title: appI18n.t("notificationScreen"),
+                      tabBarIcon: "bell",
+                    }}
                   />
                   <Tab.Screen
                     name="account"
                     component={NotificationScreen}
-                    options={{ title: "我", tabBarIcon: "account" }}
+                    options={{
+                      title: appI18n.t("account"),
+                      tabBarIcon: "account",
+                    }}
                   />
                 </>
               )}

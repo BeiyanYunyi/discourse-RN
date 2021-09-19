@@ -2348,6 +2348,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/i18n-js@npm:^3.8.2":
+  version: 3.8.2
+  resolution: "@types/i18n-js@npm:3.8.2"
+  checksum: a78c769c936c5ba1dd8192dcd1c8e2635fd5d7211c2d22729988af62881e522e1dd9927f7b323691bd1b668fe532268d181435d6e7d0f2b046922c2741ec8091
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0":
   version: 2.0.3
   resolution: "@types/istanbul-lib-coverage@npm:2.0.3"
@@ -5020,6 +5027,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-localization@npm:~10.2.0":
+  version: 10.2.0
+  resolution: "expo-localization@npm:10.2.0"
+  dependencies:
+    rtl-detect: ^1.0.2
+  checksum: 230ce6d9366b7c1cbd5d9a1090d185ec411b9118ce699ae0813ee43e7b6a751b6dbaec314f4bd86186fbf844934ec2c2ae40ddd1a714815d7e2af668b8a2f4fd
+  languageName: node
+  linkType: hard
+
 "expo-modules-autolinking@npm:^0.0.3":
   version: 0.0.3
   resolution: "expo-modules-autolinking@npm:0.0.3"
@@ -5925,6 +5941,13 @@ fsevents@^1.2.7:
   version: 1.0.4
   resolution: "hyphenate-style-name@npm:1.0.4"
   checksum: 4f5bf4b055089754924babebaa23c17845937bcca6aee95d5d015f8fa1e6814279002bd6a9e541e3fac2cd02519fc76305396727066c57c8e21a7e73e7a12137
+  languageName: node
+  linkType: hard
+
+"i18n-js@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "i18n-js@npm:3.8.0"
+  checksum: 1cc6d00107a37ab0790cd53b1370e53f3a6d30d4e1a7ca84719dbc9c4e924a3137d02fbb63c4a5c062ff9f11b36b5a9362df5506c56866df7060fb2ecc87bd4f
   languageName: node
   linkType: hard
 
@@ -9221,6 +9244,7 @@ resolve@^2.0.0-next.3:
     "@react-navigation/native": ^6.0.2
     "@react-navigation/native-stack": ^6.1.0
     "@reduxjs/toolkit": ^1.6.1
+    "@types/i18n-js": ^3.8.2
     "@types/lodash": ^4.14.172
     "@types/react": ~16.9.35
     "@types/react-native": ~0.63.2
@@ -9233,9 +9257,11 @@ resolve@^2.0.0-next.3:
     eslint-config-airbnb-typescript-prettier: ^4.2.0
     expo: ~42.0.1
     expo-app-loading: ^1.1.2
+    expo-localization: ~10.2.0
     expo-secure-store: ~10.2.0
     expo-status-bar: ~1.0.4
     htmlparser2: ^7.1.1
+    i18n-js: ^3.8.0
     jsencrypt: ^3.2.1
     keypair: ^1.0.3
     lodash: ^4.17.21
@@ -9266,6 +9292,13 @@ resolve@^2.0.0-next.3:
   version: 4.8.5
   resolution: "rsvp@npm:4.8.5"
   checksum: 2d8ef30d8febdf05bdf856ccca38001ae3647e41835ca196bc1225333f79b94ae44def733121ca549ccc36209c9b689f6586905e2a043873262609744da8efc1
+  languageName: node
+  linkType: hard
+
+"rtl-detect@npm:^1.0.2":
+  version: 1.0.4
+  resolution: "rtl-detect@npm:1.0.4"
+  checksum: d562535baa0db62f57f0a1d4676297bff72fd6b94e88f0f0900d5c3e810ab512c5c4cadffd3e05fbe8d9c74310c919afa3ea8c1001c244e5555e8eef12d02d6f
   languageName: node
   linkType: hard
 

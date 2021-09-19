@@ -15,6 +15,8 @@ export interface NotificationType {
     badge_title: true;
     username: string;
     topic_title: string;
+    display_username?: string;
+    group_name?: string;
   };
 }
 

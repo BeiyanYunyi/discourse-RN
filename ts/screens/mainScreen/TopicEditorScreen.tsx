@@ -13,6 +13,7 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Editor from "../../components/Editor";
+import appI18n from "../../i18n/controller";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { addTopicToTop } from "../../redux/topicsReducer";
 import { TopicEditorScreenNavigationProp } from "../../types/ScreenNavigationProps";
@@ -119,7 +120,7 @@ const TopicEditorScreen = () => {
             dispatch(addTopicToTop(data));
             navigation.goBack();
           } else {
-            CustomedToast({ message: "请输入标题" });
+            CustomedToast({ message: appI18n.t("pleaseInputTopic") });
           }
         }}
       />

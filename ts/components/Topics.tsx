@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React, { MutableRefObject } from "react";
 import { FlatList, Pressable } from "react-native";
 import { Caption, Card, FAB, Text } from "react-native-paper";
+import appI18n from "../i18n/controller";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { getOlderTopics, initTopics } from "../redux/topicsReducer";
 import { HomeScreenNavigationProp } from "../types/ScreenNavigationProps";
@@ -45,7 +46,13 @@ const Topic = ({ topic, user }: { topic: TopicType; user: UserType }) => {
           </Card.Content>
         ) : undefined}
         <Card.Actions>
-          <Caption>{formatTime(topic.last_posted_at, "最后回复于  ")}</Caption>
+          <Caption>
+            {formatTime(
+              topic.last_posted_at,
+              appI18n.t("lastReplyAtBefore"),
+              appI18n.t("lastReplyAtAfter")
+            )}
+          </Caption>
         </Card.Actions>
       </Card>
     </Pressable>

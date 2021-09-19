@@ -14,6 +14,7 @@ import RenderHTML from "react-native-render-html";
 import ImageRenderer from "../customRenderer/ImageRenderer";
 import LinkRenderer from "../customRenderer/LinkRenderer";
 import TextRenderer from "../customRenderer/TextRenderer";
+import appI18n from "../i18n/controller";
 import {
   getNewerPosts,
   getOlderPosts,
@@ -87,7 +88,10 @@ const Post = ({
                   : undefined
               }
             >
-              # {replyIndex !== -1 ? post.reply_to_post_number : "已删除"}
+              #{" "}
+              {replyIndex !== -1
+                ? post.reply_to_post_number
+                : appI18n.t("notLoaded")}
             </Button>
           ) : undefined
         }
@@ -125,7 +129,7 @@ const Post = ({
             navigation.navigate("PostEditor", {
               replyToPostNumber: post.post_number,
               topicId: post.topic_id,
-              title: `回复 #${post.post_number}`,
+              title: `${appI18n.t("reply")} #${post.post_number}`,
             });
           }}
         >

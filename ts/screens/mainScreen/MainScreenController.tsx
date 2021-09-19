@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import appI18n from "../../i18n/controller";
 import { useAppSelector } from "../../redux/store";
 import ScreenPropsList from "../../types/ScreenPropsList";
 import HomeScreen from "./HomeScreen";
@@ -21,7 +22,7 @@ const ScreenController = () => {
             <Stack.Screen
               name="Login"
               component={LoginScreen}
-              options={{ title: "登录并授权" }}
+              options={{ title: appI18n.t("loginAndAuthorization") }}
             />
           );
         }
@@ -50,7 +51,10 @@ const ScreenController = () => {
             <Stack.Screen
               name="TopicEditor"
               component={TopicEditorScreen}
-              options={{ title: "发帖", headerBackVisible: false }}
+              options={{
+                title: appI18n.t("newTopic"),
+                headerBackVisible: false,
+              }}
             />
           </>
         );

@@ -3,6 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { FAB } from "react-native-paper";
 import Posts from "../../components/Posts";
+import appI18n from "../../i18n/controller";
 import { clearPosts } from "../../redux/postsReducer";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { ViewTopicScreenNavigationProp } from "../../types/ScreenNavigationProps";
@@ -25,7 +26,7 @@ const ViewTopicScreen = () => {
           navigation.navigate("PostEditor", {
             replyToPostNumber: 1,
             topicId: posts[0].topic_id,
-            title: `回复 #1`,
+            title: appI18n.t("reply"),
           });
         }}
         style={{
